@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>GamerFeed</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!--HEADER -->
+<header>
+  <div class="logo">GAMER<span>FEED</span></div>
+  <input type="text" placeholder="Search games, players, achievements..."/>
+  <button class="btn-post" onclick="scrollToCreate()">+ POST</button>
+  <div class="avatar-chip">GX</div>
+</header>
+
+<!--MAIN LAYOUT -->
+<div class="app-layout">
+  <!--LEFT SIDEBAR -->
+  <aside class="sidebar-left">
+    <div class="nav-label">MAIN</div>
+    <div class="nav-item active" onclick="setFilter('all', 'all')"> Feed</div>
+    <div class="nav-item"> Trending</div>
+    <div class="nav-item"> Achievements</div>
+    <div class="nav-item"> Discussion</div>
+
+    <div class="nav-label">YOU</div>
+    <div class="nav-item"> My Profile</div>
+    <div class="nav-item"> My Achievements</div>
+    <div class="nav-item"> Saved Posts</div>
+
+    <div class="nav-label">GAMES</div>
+    <div class="nav-item"> Browse Games</div>
+  </aside>
+
+  <!--MAIN -->
+  <main class="main-content">
+
+    <!-- CREATE POST -->
+    <div class="create-post" id="create-post-box">
+      <div class="create-post-row">
+        <div class="post-avatar">DMK</div>
+        <div class="create-post-inputs">
+          <input type="text" id="post-title" placeholder="Post title..." maxlength="100"/>
+          <div class="type-chips">
+            <button class="type-chip update selected" onclick="selectType('update',this)">UPDATE</button>
+            <button class="type-chip achievement" onclick="selectType('achievement',this)">ACHIEVEMENT</button>
+            <button class="type-chip discussion" onclick="selectType('discussion',this)">DISCUSSION</button>
+          </div>
+          <textarea id="post-content" rows="3" placeholder="What's happening in your game world?"></textarea>
+          <div class="post-footer">
+            <button class="btn-cancel" onclick="clearForm()">CLEAR</button>
+            <button class="btn-submit" onclick="submitPost()">POST IT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="feed-filters">
+      <button class="feed-filter active" onclick="setFilter('all',this)">ALL</button>
+      <button class="feed-filter" onclick="setFilter('update',this)">UPDATES</button>
+      <button class="feed-filter" onclick="setFilter('achievement',this)">ACHIEVEMENTS</button>
+      <button class="feed-filter" onclick="setFilter('discussion',this)">DISCUSSIONS</button>
+    </div>
+
+    <!-- FEED -->
+    <div id="feed-container"></div>
+
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar-right">
+
+    <div class="widget">
+      <div class="widget-title"> TRENDING</div>
+      <div class="trending-item">
+        <span class="trending-rank">1</span>
+        <div>
+          <div class="trending-tag">GAME TAG</div>
+          <div class="trending-name">#Elden Ring DLC</div>
+          <div class="trending-count">2.4K posts</div>
+        </div>
+      </div>
+      <div class="trending-item">
+        <span class="trending-rank">2</span>
+        <div>
+          <div class="trending-tag">ACHIEVEMENT</div>
+          <div class="trending-name">#PlatinumHunters</div>
+          <div class="trending-count">1.8K posts</div>
+        </div>
+      </div>
+      <div class="trending-item">
+        <span class="trending-rank">3</span>
+        <div>
+          <div class="trending-tag">DISCUSSION</div>
+          <div class="trending-name">#RPGDebate2026</div>
+          <div class="trending-count">1.1K posts</div>
+        </div>
+      </div>
+      <div class="trending-item">
+        <span class="trending-rank">4</span>
+        <div>
+          <div class="trending-tag">GAME TAG</div>
+          <div class="trending-name">#CyberpunkUpdate</div>
+          <div class="trending-count">890 posts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-title"> TOP PLAYERS</div>
+      <div class="leader-item">
+        <span class="leader-pos gold-pos">1</span>
+        <div class="av green">DMK</div>
+        <span style="font-size:13px">DrMucahid</span>
+        <span class="leader-xp">48.2K XP</span>
+      </div>
+      <div class="leader-item">
+        <span class="leader-pos silver-pos">2</span>
+        <div class="av gold">NK</div>
+        <span style="font-size:13px">NightKira</span>
+        <span class="leader-xp">41.7K XP</span>
+      </div>
+      <div class="leader-item">
+        <span class="leader-pos bronze-pos">3</span>
+        <div class="av purple">VX</div>
+        <span style="font-size:13px">VoidX</span>
+        <span class="leader-xp">38.1K XP</span>
+      </div>
+      <div class="leader-item">
+        <span class="leader-pos other-pos">4</span>
+        <div class="av red">SF</div>
+        <span style="font-size:13px">StormFang</span>
+        <span class="leader-xp">29.9K XP</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-top-bar" id="modal-top-bar"></div>
+    <!--MODAL HEADER -->
+    <div class="modal-header">
+      <div class="av green" id="modal-avatar" style="width:44px;height:44px;border-radius:6px;font-size:16px;"></div>
+      <div>
+        <div style="font-size:14px;font-weight:bold" id="modal-username"></div>
+        <div style="font-size:11px;color:#555" id="modal-timestamp"></div>
+      </div>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <!--MODAL BODY -->
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-text" id="modal-content"></div>
+      <div class="modal-actions">
+        <button class="modal-action-btn" id="modal-like-btn" onclick="modalToggleLike()">
+          ^_^ <span id="modal-likes-count">0</span> Likes
+        </button>
+        <button class="modal-action-btn"> Comment</button>
+        <button class="modal-action-btn"> Share</button>
+        <button class="modal-action-btn"> Save</button>
+      </div>
+    </div>
+    <div class="comments-section">
+      <div class="comments-header">COMMENTS <span id="comments-count-label">(0)</span></div>
+      <div class="comment-input-row">
+        <textarea id="comment-input" rows="2" placeholder="Join the discussion..."></textarea>
+        <button class="btn-comment" onclick="submitComment()">POST</button>
+      </div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
