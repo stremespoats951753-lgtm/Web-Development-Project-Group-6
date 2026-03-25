@@ -3,47 +3,63 @@
    signup, and password-reset pages
 ═══════════════════════════════════════ */
 
+/* ── SESSION GUARD ── */
+/* If a valid session exists, bounce away from auth pages to the feed */
+(function () {
+  const session = localStorage.getItem('gf_session');
+  if (session) {
+    try {
+      const parsed = JSON.parse(session);
+      if (parsed && parsed.uid) {
+        window.location.replace('feed.html');
+      }
+    } catch (e) {
+      localStorage.removeItem('gf_session');
+    }
+  }
+})();
+
 /* ── THEME ── */
 (function () {
-  const html  = document.documentElement;
-  const saved = localStorage.getItem('sm_theme');
-  if (saved) html.setAttribute('data-theme', saved);
+  const root  = document.documentElement;
+  const saved = localStorage.getItem('gf_skin');
+  if (saved) root.setAttribute('data-skin', saved);
 
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('sm_theme', next);
+  document.getElementById('tint-switcher').addEventListener('click', () => {
+    const next = root.getAttribute('data-skin') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-skin', next);
+    localStorage.setItem('gf_skin', next);
   });
 })();
 
 /* ── SHARED HELPERS ── */
 
-/** Toggle an input's error class and its sibling error message */
-function setErr(inputId, errorId, show, msg) {
-  const input = document.getElementById(inputId);
-  const errEl = document.getElementById(errorId);
-  if (!input || !errEl) return;
-  input.classList.toggle('error', show);
-  errEl.classList.toggle('show', show);
+/** Toggle an input's bad class and its sibling fault message */
+function markFault(inputId, faultId, show, msg) {
+  const inp  = document.getElementById(inputId);
+  const flt  = document.getElementById(faultId);
+  if (!inp || !flt) return;
+  inp.classList.toggle('bad', show);
+  flt.classList.toggle('visible', show);
   if (msg) {
-    const sp = errEl.querySelector('span') || errEl;
+    const sp = flt.querySelector('span') || flt;
     sp.textContent = msg;
   }
 }
 
-/** Show/hide a .msg or .global-error/.global-success banner */
-function showMsg(id, show) {
+/** Show/hide a .notice or .top-alert/.top-success banner */
+function toggleNotice(id, show) {
   const el = document.getElementById(id);
-  if (el) el.classList.toggle('show', show);
+  if (el) el.classList.toggle('visible', show);
 }
 
 /** Validate email format */
-function validateEmail(v) {
+function isValidEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 }
 
 /** Toggle password visibility; swap icon on the button */
-function makePwdToggle(btnId, inputId) {
+function bindReveal(btnId, inputId) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
   btn.addEventListener('click', function () {
@@ -56,82 +72,82 @@ function makePwdToggle(btnId, inputId) {
   });
 }
 
-/** Update password strength bar */
-function updateStrength(value, fillId, labelId) {
-  let s = 0;
-  if (value.length >= 8)          s++;
-  if (/[A-Z]/.test(value))        s++;
-  if (/[0-9]/.test(value))        s++;
-  if (/[^A-Za-z0-9]/.test(value)) s++;
-  const cfg = [
+/** Update password vigor bar */
+function refreshVigor(value, fillId, labelId) {
+  let score = 0;
+  if (value.length >= 8)          score++;
+  if (/[A-Z]/.test(value))        score++;
+  if (/[0-9]/.test(value))        score++;
+  if (/[^A-Za-z0-9]/.test(value)) score++;
+  const tiers = [
     { w:'0%',   c:'#f50057', t:'Enter a password' },
     { w:'25%',  c:'#f50057', t:'Weak' },
     { w:'50%',  c:'#f5a000', t:'Fair' },
     { w:'75%',  c:'#00c97f', t:'Good' },
     { w:'100%', c:'#00f5a0', t:'Strong ✓' },
   ];
-  const pick  = value.length === 0 ? cfg[0] : cfg[s];
+  const pick  = value.length === 0 ? tiers[0] : tiers[score];
   const fill  = document.getElementById(fillId);
   const label = document.getElementById(labelId);
   if (fill)  { fill.style.width = pick.w; fill.style.background = pick.c; }
-  if (label) { label.textContent = pick.t; label.style.color = value.length === 0 ? 'var(--text-muted)' : pick.c; }
+  if (label) { label.textContent = pick.t; label.style.color = value.length === 0 ? 'var(--txt-muted)' : pick.c; }
 }
 
 
 /* ══════════════════════════════════════
    LOGIN PAGE
 ══════════════════════════════════════ */
-if (document.getElementById('login-btn')) {
+if (document.getElementById('submit-login')) {
 
-  makePwdToggle('pwd-toggle', 'password');
+  bindReveal('reveal-btn', 'pw-field');
 
-  document.getElementById('login-btn').addEventListener('click', function () {
-    const raw = document.getElementById('identifier').value.trim();
-    const pwd = document.getElementById('password').value;
+  document.getElementById('submit-login').addEventListener('click', function () {
+    const raw = document.getElementById('id-field').value.trim();
+    const pwd = document.getElementById('pw-field').value;
     let ok = true;
 
-    showMsg('global-error', false);
-    setErr('identifier', 'identifier-error', false);
-    setErr('password',   'pwd-error',        false);
+    toggleNotice('top-alert', false);
+    markFault('id-field', 'id-field-fault', false);
+    markFault('pw-field', 'pw-field-fault', false);
 
-    if (raw.length < 2) { setErr('identifier', 'identifier-error', true); ok = false; }
-    if (!pwd)           { setErr('password',   'pwd-error',        true); ok = false; }
+    if (raw.length < 2) { markFault('id-field', 'id-field-fault', true); ok = false; }
+    if (!pwd)           { markFault('pw-field', 'pw-field-fault', true); ok = false; }
     if (!ok) return;
 
-    this.classList.add('loading');
+    this.classList.add('busy');
     setTimeout(() => {
-      this.classList.remove('loading');
+      this.classList.remove('busy');
       const identifier = raw.replace(/^@/, '');
-      const users = JSON.parse(localStorage.getItem('sm_users') || '[]');
-      const user  = users.find(u =>
-        (u.email === identifier || u.username === identifier) && u.passwordHash === pwd
+      const roster = JSON.parse(localStorage.getItem('gf_roster') || '[]');
+      const match  = roster.find(u =>
+        (u.email === identifier || u.username === identifier) && u.pwHash === pwd
       );
 
-      if (user) {
-        localStorage.setItem('sm_session', JSON.stringify({ userId: user.userId }));
-        const btn = document.getElementById('login-btn');
+      if (match) {
+        localStorage.setItem('gf_session', JSON.stringify({ uid: match.uid }));
+        const btn = document.getElementById('submit-login');
         btn.style.background = '#00f5a0';
-        btn.querySelector('.btn-text').textContent = 'Redirecting…';
-        setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        btn.querySelector('.cta-label').textContent = 'Redirecting…';
+        setTimeout(() => { window.location.href = 'feed.html'; }, 800);
       } else {
-        showMsg('global-error', true);
-        document.getElementById('identifier').classList.add('error');
-        document.getElementById('password').classList.add('error');
+        toggleNotice('top-alert', true);
+        document.getElementById('id-field').classList.add('bad');
+        document.getElementById('pw-field').classList.add('bad');
       }
     }, 900);
   });
 
-  ['identifier', 'password'].forEach(id => {
+  ['id-field', 'pw-field'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
-      document.getElementById(id).classList.remove('error');
-      const errId = id === 'identifier' ? 'identifier-error' : 'pwd-error';
-      document.getElementById(errId).classList.remove('show');
-      showMsg('global-error', false);
+      document.getElementById(id).classList.remove('bad');
+      const faultId = id === 'id-field' ? 'id-field-fault' : 'pw-field-fault';
+      document.getElementById(faultId).classList.remove('visible');
+      toggleNotice('top-alert', false);
     });
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('login-btn').click();
+    if (e.key === 'Enter') document.getElementById('submit-login').click();
   });
 }
 
@@ -139,109 +155,112 @@ if (document.getElementById('login-btn')) {
 /* ══════════════════════════════════════
    SIGNUP PAGE
 ══════════════════════════════════════ */
-if (document.getElementById('signup-btn')) {
+if (document.getElementById('submit-signup')) {
 
   // Checkbox toggle
-  window.toggleCheck = function (el) {
-    document.getElementById('terms-check').classList.toggle('checked', el.checked);
+  window.toggleTick = function (el) {
+    document.getElementById('tick-wrap').classList.toggle('ticked', el.checked);
   };
 
-  // Password toggle & strength
-  makePwdToggle('pwd-toggle', 'password');
-  document.getElementById('password').addEventListener('input', function () {
-    updateStrength(this.value, 'strength-fill', 'strength-label');
+  // Password reveal & vigor
+  bindReveal('reveal-btn', 'pw-field');
+  document.getElementById('pw-field').addEventListener('input', function () {
+    refreshVigor(this.value, 'vigor-fill', 'vigor-label');
   });
 
-  // Username availability check
-  let uTimer;
-  document.getElementById('username').addEventListener('input', function () {
-    clearTimeout(uTimer);
-    const s = document.getElementById('username-status');
-    const v = this.value.trim();
-    s.className = 'username-status';
-    if (v.length < 3) return;
-    s.className = 'username-status checking';
-    s.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Checking…`;
-    uTimer = setTimeout(() => {
-      const users = JSON.parse(localStorage.getItem('sm_users') || '[]');
-      const taken = users.some(u => u.username === v);
+  // Handle availability check
+  let probeTimer;
+  document.getElementById('handle-field').addEventListener('input', function () {
+    clearTimeout(probeTimer);
+    const probe = document.getElementById('handle-probe');
+    const val   = this.value.trim();
+    probe.className = 'handle-probe';
+    if (val.length < 3) return;
+    probe.className = 'handle-probe scanning';
+    probe.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Checking…`;
+    probeTimer = setTimeout(() => {
+      const roster = JSON.parse(localStorage.getItem('gf_roster') || '[]');
+      const taken  = roster.some(u => u.username === val);
       if (taken) {
-        s.className = 'username-status taken';
-        s.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Taken`;
-        this.classList.add('error');
+        probe.className = 'handle-probe occupied';
+        probe.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Taken`;
+        this.classList.add('bad');
       } else {
-        s.className = 'username-status available';
-        s.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Available`;
-        this.classList.remove('error'); this.classList.add('valid');
+        probe.className = 'handle-probe free';
+        probe.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Available`;
+        this.classList.remove('bad'); this.classList.add('good');
       }
     }, 600);
   });
 
   // Submit
-  document.getElementById('signup-btn').addEventListener('click', function () {
-    const fname    = document.getElementById('first-name').value.trim();
-    const lname    = document.getElementById('last-name').value.trim();
-    const username = document.getElementById('username').value.trim();
-    const email    = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const terms    = document.getElementById('terms').checked;
+  document.getElementById('submit-signup').addEventListener('click', function () {
+    const fname    = document.getElementById('fn-field').value.trim();
+    const lname    = document.getElementById('ln-field').value.trim();
+    const handle   = document.getElementById('handle-field').value.trim();
+    const email    = document.getElementById('mail-field').value.trim();
+    const password = document.getElementById('pw-field').value;
+    const agreed   = document.getElementById('tos-box').checked;
     let ok = true;
 
-    showMsg('global-error', false);
-    ['fname-error','lname-error','username-error','email-error','pwd-error'].forEach(id => {
+    toggleNotice('top-alert', false);
+    ['fn-field-fault','ln-field-fault','handle-field-fault','mail-field-fault','pw-field-fault'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.classList.remove('show');
+      if (el) el.classList.remove('visible');
     });
-    ['first-name','last-name','username','email','password'].forEach(id => {
+    ['fn-field','ln-field','handle-field','mail-field','pw-field'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.classList.remove('error');
+      if (el) el.classList.remove('bad');
     });
 
-    if (!fname)                    { setErr('first-name','fname-error',true);                          ok = false; }
-    if (!lname)                    { setErr('last-name','lname-error',true);                           ok = false; }
-    if (!username||username.length<3){ setErr('username','username-error',true,'Min. 3 characters.'); ok = false; }
-    if (!validateEmail(email))     { setErr('email','email-error',true,'Valid email required.');       ok = false; }
-    if (password.length < 8)       { setErr('password','pwd-error',true,'Min. 8 characters.');        ok = false; }
-    if (!terms) {
-      const errEl = document.getElementById('global-error');
-      if (errEl) {
-        const sp = errEl.querySelector('span') || errEl;
+    if (!fname)                    { markFault('fn-field','fn-field-fault',true);                                    ok = false; }
+    if (!lname)                    { markFault('ln-field','ln-field-fault',true);                                    ok = false; }
+    if (!handle||handle.length<3)  { markFault('handle-field','handle-field-fault',true,'Min. 3 characters.');      ok = false; }
+    if (!isValidEmail(email))      { markFault('mail-field','mail-field-fault',true,'Valid email required.');        ok = false; }
+    if (password.length < 8)       { markFault('pw-field','pw-field-fault',true,'Min. 8 characters.');              ok = false; }
+    if (!agreed) {
+      const alertEl = document.getElementById('top-alert');
+      if (alertEl) {
+        const sp = alertEl.querySelector('span') || alertEl;
         sp.textContent = 'Please agree to the Terms of Service.';
       }
-      showMsg('global-error', true);
+      toggleNotice('top-alert', true);
       ok = false;
     }
     if (!ok) return;
 
-    const users = JSON.parse(localStorage.getItem('sm_users') || '[]');
-    if (users.some(u => u.email === email))    { setErr('email','email-error',true,'Email already registered.');   return; }
-    if (users.some(u => u.username === username)){ setErr('username','username-error',true,'Username taken.'); return; }
+    const roster = JSON.parse(localStorage.getItem('gf_roster') || '[]');
+    if (roster.some(u => u.email === email))   { markFault('mail-field','mail-field-fault',true,'Email already registered.');  return; }
+    if (roster.some(u => u.username === handle)){ markFault('handle-field','handle-field-fault',true,'Username taken.');       return; }
 
-    this.classList.add('loading');
+    this.classList.add('busy');
     setTimeout(() => {
-      this.classList.remove('loading');
-      users.push({
-        userId: 'u_' + Date.now(), username, email, passwordHash: password,
-        profilePicture: null, bio: '', createdAt: new Date().toISOString(),
+      this.classList.remove('busy');
+      const newUid = 'u_' + Date.now();
+      roster.push({
+        uid: newUid, username: handle, email, pwHash: password,
+        avatar: null, bio: '', joinedAt: new Date().toISOString(),
         firstName: fname, lastName: lname
       });
-      localStorage.setItem('sm_users', JSON.stringify(users));
+      localStorage.setItem('gf_roster', JSON.stringify(roster));
+      // Auto-login the new user and head straight to the feed
+      localStorage.setItem('gf_session', JSON.stringify({ uid: newUid }));
 
-      const s1 = document.getElementById('step-1');
-      if (s1) {
-        s1.classList.remove('active'); s1.classList.add('done');
-        const dot = s1.querySelector('.step-dot');
+      const ob1 = document.getElementById('ob-1');
+      if (ob1) {
+        ob1.classList.remove('lit'); ob1.classList.add('done');
+        const dot = ob1.querySelector('.onboard-dot');
         if (dot) dot.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
-        const s2 = document.getElementById('step-2');
-        if (s2) s2.classList.add('active');
+        const ob2 = document.getElementById('ob-2');
+        if (ob2) ob2.classList.add('lit');
       }
-      showMsg('global-success', true);
-      setTimeout(() => { window.location.href = 'login.html'; }, 1800);
+      toggleNotice('top-success', true);
+      setTimeout(() => { window.location.href = 'feed.html'; }, 1800);
     }, 1000);
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('signup-btn').click();
+    if (e.key === 'Enter') document.getElementById('submit-signup').click();
   });
 }
 
@@ -249,219 +268,219 @@ if (document.getElementById('signup-btn')) {
 /* ══════════════════════════════════════
    PASSWORD RESET PAGE
 ══════════════════════════════════════ */
-if (document.getElementById('s1-btn')) {
+if (document.getElementById('r1-advance')) {
 
-  let targetUserId = null;
-  const digits = ['c0','c1','c2','c3','c4','c5'];
+  let pendingUid = null;
+  const boxes = ['d0','d1','d2','d3','d4','d5'];
 
-  function generateCode() {
+  function makeCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
   }
 
-  function setFieldErr(id, show) {
+  function toggleFault(id, show) {
     const el = document.getElementById(id);
-    if (el) el.classList.toggle('show', show);
+    if (el) el.classList.toggle('visible', show);
   }
 
-  function goToStep(n) {
-    document.querySelectorAll('.reset-step').forEach(s => s.classList.remove('active'));
-    const step = document.getElementById('reset-step-' + n);
-    if (step) step.classList.add('active');
+  function jumpToStage(n) {
+    document.querySelectorAll('.flow-stage').forEach(s => s.classList.remove('active'));
+    const tgt = document.getElementById('flow-stage-' + n);
+    if (tgt) tgt.classList.add('active');
     for (let i = 1; i <= 3; i++) {
-      const dot = document.getElementById('dot-' + i);
+      const dot = document.getElementById('tdot-' + i);
       if (!dot) continue;
-      dot.classList.remove('active', 'done');
+      dot.classList.remove('lit', 'done');
       if (i < n)   dot.classList.add('done');
-      if (i === n) dot.classList.add('active');
+      if (i === n) dot.classList.add('lit');
     }
   }
 
-  // Step 1
-  document.getElementById('s1-btn').addEventListener('click', function () {
-    const raw = document.getElementById('s1-identifier').value.trim();
-    showMsg('s1-error', false);
-    setErr('s1-identifier', 's1-identifier-error', false);
+  // Stage 1
+  document.getElementById('r1-advance').addEventListener('click', function () {
+    const raw = document.getElementById('r1-lookup').value.trim();
+    toggleNotice('r1-notice', false);
+    markFault('r1-lookup', 'r1-lookup-fault', false);
 
-    if (!raw) { setErr('s1-identifier', 's1-identifier-error', true); return; }
+    if (!raw) { markFault('r1-lookup', 'r1-lookup-fault', true); return; }
 
-    this.classList.add('loading');
+    this.classList.add('busy');
     setTimeout(() => {
-      this.classList.remove('loading');
+      this.classList.remove('busy');
       const identifier = raw.replace(/^@/, '');
-      const users = JSON.parse(localStorage.getItem('sm_users') || '[]');
-      const user  = users.find(u => u.email === identifier || u.username === identifier);
+      const roster = JSON.parse(localStorage.getItem('gf_roster') || '[]');
+      const hit    = roster.find(u => u.email === identifier || u.username === identifier);
 
-      if (!user) {
-        const errEl = document.getElementById('s1-error-text');
-        if (errEl) errEl.textContent = 'No account found with that email or username.';
-        showMsg('s1-error', true);
-        document.getElementById('s1-identifier').classList.add('error');
+      if (!hit) {
+        const txt = document.getElementById('r1-notice-copy');
+        if (txt) txt.textContent = 'No account found with that email or username.';
+        toggleNotice('r1-notice', true);
+        document.getElementById('r1-lookup').classList.add('bad');
         return;
       }
 
-      const code = generateCode();
-      targetUserId = user.userId;
-      localStorage.setItem('sm_reset_code', JSON.stringify({
-        code, userId: user.userId, expires: Date.now() + 15 * 60 * 1000
+      const code = makeCode();
+      pendingUid = hit.uid;
+      localStorage.setItem('gf_reset', JSON.stringify({
+        code, uid: hit.uid, expiry: Date.now() + 15 * 60 * 1000
       }));
 
-      const devDisplay = document.getElementById('dev-code-display');
-      if (devDisplay) devDisplay.textContent = code;
-      const s2email = document.getElementById('s2-email');
-      if (s2email) s2email.textContent = user.email || user.username;
+      const dbg = document.getElementById('debug-value');
+      if (dbg) dbg.textContent = code;
+      const tgt = document.getElementById('r2-target-id');
+      if (tgt) tgt.textContent = hit.email || hit.username;
 
-      goToStep(2);
-      const c0 = document.getElementById('c0');
-      if (c0) c0.focus();
+      jumpToStage(2);
+      const d0 = document.getElementById('d0');
+      if (d0) d0.focus();
     }, 800);
   });
 
-  // Code digit inputs
-  digits.forEach((id, i) => {
+  // Digit boxes
+  boxes.forEach((id, i) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener('input', () => {
       el.value = el.value.replace(/\D/g, '').slice(-1);
-      el.classList.remove('error');
-      if (el.value && i < digits.length - 1) document.getElementById(digits[i + 1]).focus();
+      el.classList.remove('bad');
+      if (el.value && i < boxes.length - 1) document.getElementById(boxes[i + 1]).focus();
     });
     el.addEventListener('keydown', e => {
-      if (e.key === 'Backspace' && !el.value && i > 0) document.getElementById(digits[i - 1]).focus();
+      if (e.key === 'Backspace' && !el.value && i > 0) document.getElementById(boxes[i - 1]).focus();
     });
     el.addEventListener('paste', e => {
       e.preventDefault();
       const pasted = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
       pasted.split('').forEach((ch, j) => {
-        const t = document.getElementById(digits[j]);
+        const t = document.getElementById(boxes[j]);
         if (t) t.value = ch;
       });
       const last = Math.min(pasted.length, 5);
-      document.getElementById(digits[last]).focus();
+      document.getElementById(boxes[last]).focus();
     });
   });
 
-  // Resend code
-  window.resendCode = function () {
-    const stored = JSON.parse(localStorage.getItem('sm_reset_code') || 'null');
+  // Regen code
+  window.regenCode = function () {
+    const stored = JSON.parse(localStorage.getItem('gf_reset') || 'null');
     if (!stored) return;
-    const code = generateCode();
-    localStorage.setItem('sm_reset_code', JSON.stringify({
-      code, userId: stored.userId, expires: Date.now() + 15 * 60 * 1000
+    const code = makeCode();
+    localStorage.setItem('gf_reset', JSON.stringify({
+      code, uid: stored.uid, expiry: Date.now() + 15 * 60 * 1000
     }));
-    const devDisplay = document.getElementById('dev-code-display');
-    if (devDisplay) devDisplay.textContent = code;
-    digits.forEach(id => {
+    const dbg = document.getElementById('debug-value');
+    if (dbg) dbg.textContent = code;
+    boxes.forEach(id => {
       const el = document.getElementById(id);
-      if (el) { el.value = ''; el.classList.remove('error'); }
+      if (el) { el.value = ''; el.classList.remove('bad'); }
     });
-    showMsg('s2-error', false);
-    const c0 = document.getElementById('c0');
-    if (c0) c0.focus();
+    toggleNotice('r2-notice', false);
+    const d0 = document.getElementById('d0');
+    if (d0) d0.focus();
   };
 
-  // Step 2
-  document.getElementById('s2-btn').addEventListener('click', function () {
-    showMsg('s2-error', false);
-    digits.forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('error'); });
+  // Stage 2
+  document.getElementById('r2-advance').addEventListener('click', function () {
+    toggleNotice('r2-notice', false);
+    boxes.forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('bad'); });
 
-    const entered = digits.map(id => {
+    const entered = boxes.map(id => {
       const el = document.getElementById(id);
       return el ? el.value : '';
     }).join('');
 
     if (entered.length < 6) {
-      digits.forEach(id => {
+      boxes.forEach(id => {
         const el = document.getElementById(id);
-        if (el && !el.value) el.classList.add('error');
+        if (el && !el.value) el.classList.add('bad');
       });
       return;
     }
 
-    this.classList.add('loading');
+    this.classList.add('busy');
     setTimeout(() => {
-      this.classList.remove('loading');
-      const stored = JSON.parse(localStorage.getItem('sm_reset_code') || 'null');
-      const errText = document.getElementById('s2-error-text');
+      this.classList.remove('busy');
+      const stored  = JSON.parse(localStorage.getItem('gf_reset') || 'null');
+      const copyEl  = document.getElementById('r2-notice-copy');
 
       if (!stored) {
-        if (errText) errText.textContent = 'No reset code found. Please start over.';
-        showMsg('s2-error', true); return;
+        if (copyEl) copyEl.textContent = 'No reset code found. Please start over.';
+        toggleNotice('r2-notice', true); return;
       }
-      if (Date.now() > stored.expires) {
-        if (errText) errText.textContent = 'Code expired. Please request a new one.';
-        showMsg('s2-error', true); return;
+      if (Date.now() > stored.expiry) {
+        if (copyEl) copyEl.textContent = 'Code expired. Please request a new one.';
+        toggleNotice('r2-notice', true); return;
       }
       if (entered !== stored.code) {
-        if (errText) errText.textContent = 'Invalid code. Please try again.';
-        showMsg('s2-error', true);
-        digits.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('error'); });
+        if (copyEl) copyEl.textContent = 'Invalid code. Please try again.';
+        toggleNotice('r2-notice', true);
+        boxes.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('bad'); });
         return;
       }
 
-      targetUserId = stored.userId;
-      goToStep(3);
-      const s3pwd = document.getElementById('s3-pwd');
-      if (s3pwd) s3pwd.focus();
+      pendingUid = stored.uid;
+      jumpToStage(3);
+      const r3pw = document.getElementById('r3-newpw');
+      if (r3pw) r3pw.focus();
     }, 600);
   });
 
-  // Step 3 — password strength & toggles
-  const s3pwd = document.getElementById('s3-pwd');
-  if (s3pwd) {
-    s3pwd.addEventListener('input', function () {
-      updateStrength(this.value, 'strength-fill', 'strength-label');
+  // Stage 3 — vigor & reveals
+  const r3pw = document.getElementById('r3-newpw');
+  if (r3pw) {
+    r3pw.addEventListener('input', function () {
+      refreshVigor(this.value, 'vigor-fill', 'vigor-label');
     });
   }
-  makePwdToggle('pwd-toggle-1', 's3-pwd');
-  makePwdToggle('pwd-toggle-2', 's3-confirm');
+  bindReveal('reveal-r3-newpw', 'r3-newpw');
+  bindReveal('reveal-r3-repw',  'r3-repw');
 
-  document.getElementById('s3-btn').addEventListener('click', function () {
-    const pwd     = document.getElementById('s3-pwd').value;
-    const confirm = document.getElementById('s3-confirm').value;
-    showMsg('s3-error', false);
-    setFieldErr('s3-pwd-error', false);
-    setFieldErr('s3-confirm-error', false);
-    document.getElementById('s3-pwd').classList.remove('error');
-    document.getElementById('s3-confirm').classList.remove('error');
+  document.getElementById('r3-advance').addEventListener('click', function () {
+    const pw1 = document.getElementById('r3-newpw').value;
+    const pw2 = document.getElementById('r3-repw').value;
+    toggleNotice('r3-notice', false);
+    toggleFault('r3-newpw-fault', false);
+    toggleFault('r3-repw-fault', false);
+    document.getElementById('r3-newpw').classList.remove('bad');
+    document.getElementById('r3-repw').classList.remove('bad');
 
     let ok = true;
-    if (pwd.length < 8) { setFieldErr('s3-pwd-error', true); document.getElementById('s3-pwd').classList.add('error'); ok = false; }
-    if (pwd !== confirm) { setFieldErr('s3-confirm-error', true); document.getElementById('s3-confirm').classList.add('error'); ok = false; }
+    if (pw1.length < 8) { toggleFault('r3-newpw-fault', true); document.getElementById('r3-newpw').classList.add('bad'); ok = false; }
+    if (pw1 !== pw2)    { toggleFault('r3-repw-fault', true);  document.getElementById('r3-repw').classList.add('bad');  ok = false; }
     if (!ok) return;
 
-    this.classList.add('loading');
+    this.classList.add('busy');
     setTimeout(() => {
-      this.classList.remove('loading');
-      if (!targetUserId) {
-        const errText = document.getElementById('s3-error-text');
-        if (errText) errText.textContent = 'Session expired. Please start over.';
-        showMsg('s3-error', true); return;
+      this.classList.remove('busy');
+      if (!pendingUid) {
+        const copyEl = document.getElementById('r3-notice-copy');
+        if (copyEl) copyEl.textContent = 'Session expired. Please start over.';
+        toggleNotice('r3-notice', true); return;
       }
 
-      const users = JSON.parse(localStorage.getItem('sm_users') || '[]');
-      const idx   = users.findIndex(u => u.userId === targetUserId);
+      const roster = JSON.parse(localStorage.getItem('gf_roster') || '[]');
+      const idx    = roster.findIndex(u => u.uid === pendingUid);
       if (idx === -1) {
-        const errText = document.getElementById('s3-error-text');
-        if (errText) errText.textContent = 'User not found. Please start over.';
-        showMsg('s3-error', true); return;
+        const copyEl = document.getElementById('r3-notice-copy');
+        if (copyEl) copyEl.textContent = 'User not found. Please start over.';
+        toggleNotice('r3-notice', true); return;
       }
 
-      users[idx].passwordHash = pwd;
-      localStorage.setItem('sm_users', JSON.stringify(users));
-      localStorage.removeItem('sm_reset_code');
-      targetUserId = null;
-      goToStep(4);
+      roster[idx].pwHash = pw1;
+      localStorage.setItem('gf_roster', JSON.stringify(roster));
+      localStorage.removeItem('gf_reset');
+      pendingUid = null;
+      jumpToStage(4);
     }, 800);
   });
 
   // Enter key
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
-    const active = document.querySelector('.reset-step.active');
+    const active = document.querySelector('.flow-stage.active');
     if (!active) return;
-    const id = active.id;
-    if (id === 'reset-step-1') document.getElementById('s1-btn').click();
-    if (id === 'reset-step-2') document.getElementById('s2-btn').click();
-    if (id === 'reset-step-3') document.getElementById('s3-btn').click();
+    const sid = active.id;
+    if (sid === 'flow-stage-1') document.getElementById('r1-advance').click();
+    if (sid === 'flow-stage-2') document.getElementById('r2-advance').click();
+    if (sid === 'flow-stage-3') document.getElementById('r3-advance').click();
   });
 }
