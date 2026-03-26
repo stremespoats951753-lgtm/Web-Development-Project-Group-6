@@ -171,10 +171,3 @@ This is implemented via CSS: the `.card-content` class in `index.css` has a `max
 It was stated in the project description that:
 `The main page of the platform, displaying a stream of posts from the users they follow. Each post should show the author's username, the content of the post, and the timestamp.`
 To make the platform more practical, the default news feed displays all posts instead of only followed users. This was a deliberate design choice, since a new user who has just created an account would not be following anyone yet, which would otherwise leave the feed empty. To still support the required follow-based behavior, a separate Followed feed option was included, which filters the posts and shows only content from users the current user follows.
-
----
-
-## Project Links
-
-- **GitHub Repository URI:** [INSERT YOUR GITHUB REPO URL HERE]
-- **Live Demo URI:** [INSERT YOUR LIVE DEMO URL HERE, e.g. GitHub Pages]
