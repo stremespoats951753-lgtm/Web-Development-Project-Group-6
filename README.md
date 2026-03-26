@@ -3,9 +3,10 @@
 **Course Name:** Web Development Fundamentals (CMPS 350)
 
 **Group Members:**
-- [Member 1 Name]
-- [Member 2 Name]
-- [Member 3 Name]
+- Hamza Darwish 
+- Abdalla Hassan
+- Muhammad Qureshi
+- Naeem Kadir
 
 ---
 
