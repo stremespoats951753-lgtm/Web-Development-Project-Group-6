@@ -651,10 +651,16 @@ function saveProfileEdits() {
   const newUsername = usernameInput ? usernameInput.value.trim() : "";
   const newBio = bioInput ? bioInput.value.trim() : "";
 
+  const USERNAME_PATTERN = /^[A-Za-z0-9_]+$/;
+
   if (newUsername.length < MIN_USERNAME_LENGTH) {
     showToast(`Username must be at least ${MIN_USERNAME_LENGTH} characters.`);
     return;
   }
+  if (!USERNAME_PATTERN.test(newUsername)) {
+  showToast("Username can only contain letters, numbers, and underscores.");
+  return;
+}
 
   const data = getAppData();
 
