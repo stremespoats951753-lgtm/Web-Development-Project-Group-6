@@ -1,5 +1,44 @@
 const STORAGE_KEY = "gamerfeedData";
 
+const DEMO_USERS = {
+  demo_nightkira: {
+    id: "demo_nightkira",
+    username: "NightKira",
+    email: "nightkira@gamerfeed.demo",
+    bio: "Achievement hunter and soulslike grinder.",
+    avatar: "NK",
+    followers: [],
+    following: []
+  },
+  demo_axelrift: {
+    id: "demo_axelrift",
+    username: "AxelRift",
+    email: "axelrift@gamerfeed.demo",
+    bio: "Patch-note addict and RPG fan.",
+    avatar: "AX",
+    followers: [],
+    following: []
+  },
+  demo_voidx: {
+    id: "demo_voidx",
+    username: "VoidX",
+    email: "voidx@gamerfeed.demo",
+    bio: "Hot takes, long threads, zero regrets.",
+    avatar: "VX",
+    followers: [],
+    following: []
+  },
+  demo_stormfang: {
+    id: "demo_stormfang",
+    username: "StormFang",
+    email: "stormfang@gamerfeed.demo",
+    bio: "Always answering the call for Super Earth.",
+    avatar: "SF",
+    followers: [],
+    following: []
+  }
+};
+
 let viewedUser = null;
 let currentUser = null;
 let viewedUserPosts = [];
@@ -41,6 +80,35 @@ function getCurrentUser(data) {
 
 function getUserById(data, userId) {
   return data.users.find(user => user.id === userId) || null;
+}
+
+function getDemoUser(userId) {
+  return DEMO_USERS[userId] || null;
+}
+
+function getFollowingList(user) {
+  return Array.isArray(user?.following) ? user.following : [];
+}
+
+function isOwnProfile() {
+  return viewedUser && currentUser && viewedUser.id === currentUser.id;
+}
+
+function isFollowingViewedUser() {
+  if (!currentUser || !viewedUser) return false;
+  return getFollowingList(currentUser).includes(viewedUser.id);
+}
+
+function getFollowerCount(data, userId) {
+  let count = 0;
+
+  data.users.forEach(user => {
+    if (Array.isArray(user.following) && user.following.includes(userId)) {
+      count++;
+    }
+  });
+
+  return count;
 }
 
 function getAvatarClassFromText(text) {
@@ -132,49 +200,6 @@ function normalizePost(post, data) {
   };
 }
 
-function getDemoUser(userId) {
-  const demoUsers = {
-    demo_nightkira: {
-      id: "demo_nightkira",
-      username: "NightKira",
-      email: "nightkira@gamerfeed.demo",
-      bio: "Achievement hunter and soulslike grinder.",
-      avatar: "NK",
-      followers: [],
-      following: []
-    },
-    demo_axelrift: {
-      id: "demo_axelrift",
-      username: "AxelRift",
-      email: "axelrift@gamerfeed.demo",
-      bio: "Patch-note addict and RPG fan.",
-      avatar: "AX",
-      followers: [],
-      following: []
-    },
-    demo_voidx: {
-      id: "demo_voidx",
-      username: "VoidX",
-      email: "voidx@gamerfeed.demo",
-      bio: "Hot takes, long threads, zero regrets.",
-      avatar: "VX",
-      followers: [],
-      following: []
-    },
-    demo_stormfang: {
-      id: "demo_stormfang",
-      username: "StormFang",
-      email: "stormfang@gamerfeed.demo",
-      bio: "Always answering the call for Super Earth.",
-      avatar: "SF",
-      followers: [],
-      following: []
-    }
-  };
-
-  return demoUsers[userId] || null;
-}
-
 function getViewedUser(data) {
   const params = new URLSearchParams(window.location.search);
   const userId = params.get("user");
@@ -232,7 +257,7 @@ function buildProfilePostCard(post) {
 }
 
 function renderProfileHeader(data) {
-  const isOwnProfile = viewedUser.id === currentUser.id;
+  const ownProfile = isOwnProfile();
   const avatarText = viewedUser.avatar || viewedUser.username.slice(0, 2).toUpperCase();
 
   const profileAvatar = document.getElementById("profileAvatar");
@@ -244,6 +269,7 @@ function renderProfileHeader(data) {
   const profileFollowingCount = document.getElementById("profileFollowingCount");
   const profileOwnerBadge = document.getElementById("profileOwnerBadge");
   const editProfileBtn = document.getElementById("editProfileBtn");
+  const followToggleBtn = document.getElementById("followToggleBtn");
   const sideUsername = document.getElementById("sideUsername");
   const sideBio = document.getElementById("sideBio");
   const headerAvatar = document.getElementById("headerAvatar");
@@ -258,15 +284,35 @@ function renderProfileHeader(data) {
   if (profileBio) profileBio.textContent = viewedUser.bio || "No bio yet.";
 
   if (profilePostsCount) profilePostsCount.textContent = viewedUserPosts.length;
-  if (profileFollowersCount) {
-    profileFollowersCount.textContent = Array.isArray(viewedUser.followers) ? viewedUser.followers.length : 0;
-  }
+  if (profileFollowersCount) profileFollowersCount.textContent = getFollowerCount(data, viewedUser.id);
   if (profileFollowingCount) {
     profileFollowingCount.textContent = Array.isArray(viewedUser.following) ? viewedUser.following.length : 0;
   }
 
-  if (profileOwnerBadge) profileOwnerBadge.style.display = isOwnProfile ? "inline-flex" : "none";
-  if (editProfileBtn) editProfileBtn.style.display = isOwnProfile ? "inline-flex" : "none";
+  if (profileOwnerBadge) {
+    profileOwnerBadge.style.display = "inline-flex";
+    profileOwnerBadge.textContent = ownProfile ? "YOU" : "USER";
+  }
+
+  if (editProfileBtn) {
+    editProfileBtn.style.display = ownProfile ? "inline-flex" : "none";
+  }
+
+  if (followToggleBtn) {
+    if (ownProfile) {
+      followToggleBtn.style.display = "none";
+    } else {
+      followToggleBtn.style.display = "inline-flex";
+
+      if (isFollowingViewedUser()) {
+        followToggleBtn.textContent = "Unfollow";
+        followToggleBtn.classList.add("btn-unfollow");
+      } else {
+        followToggleBtn.textContent = "Follow";
+        followToggleBtn.classList.remove("btn-unfollow");
+      }
+    }
+  }
 
   if (sideUsername) sideUsername.textContent = viewedUser.username || "Unknown User";
   if (sideBio) sideBio.textContent = viewedUser.bio || "No bio yet.";
@@ -374,6 +420,33 @@ function saveProfileEdits() {
   closeEditProfile();
   renderPage();
   showToast("Profile updated!");
+}
+
+function toggleFollowUser() {
+  if (!currentUser || !viewedUser || isOwnProfile()) return;
+
+  const data = getAppData();
+  const userIndex = data.users.findIndex(user => user.id === currentUser.id);
+  if (userIndex === -1) return;
+
+  if (!Array.isArray(data.users[userIndex].following)) {
+    data.users[userIndex].following = [];
+  }
+
+  const following = data.users[userIndex].following;
+  const alreadyFollowing = following.includes(viewedUser.id);
+
+  if (alreadyFollowing) {
+    data.users[userIndex].following = following.filter(id => id !== viewedUser.id);
+    showToast(`Unfollowed ${viewedUser.username}`);
+  } else {
+    data.users[userIndex].following.push(viewedUser.id);
+    showToast(`Following ${viewedUser.username}`);
+  }
+
+  saveAppData(data);
+  currentUser = data.users[userIndex];
+  renderPage();
 }
 
 function bindLogout() {
