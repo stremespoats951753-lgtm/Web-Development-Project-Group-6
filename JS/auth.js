@@ -5,7 +5,8 @@
  * 
  * This script handles the login form submission:
  *   1. Validates that the email contains "@" and the password
- *      is not empty.
+ *      is not empty and that username does not contain illegal 
+ *      characters (except for underscore).
  *   2. Looks up the user in localStorage data.
  *   3. If found, sets currentUserId and redirects to the feed.
  *   4. If not found, shows an error message.

@@ -59,7 +59,6 @@
   </header>
 
   <!-- ═══════ MAIN LAYOUT — 3-column Flexbox ═══════ -->
-  <!-- See: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout -->
   <div class="app-layout">
 
     <!-- LEFT SIDEBAR — Navigation links -->
@@ -88,7 +87,6 @@
     <main class="main-content">
 
       <!-- Create-post form -->
-      <!-- See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input -->
       <section class="create-post" id="create-post-box">
         <div class="create-post-row">
           <div class="post-avatar">DMK</div>
@@ -110,7 +108,6 @@
       </section>
 
       <!-- Filter chips for post type -->
-      <!-- See: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tab_role -->
       <div class="feed-filters" role="tablist">
         <button class="feed-filter active" onclick="setFilter('all',this)">ALL</button>
         <button class="feed-filter" onclick="setFilter('update',this)">UPDATES</button>
@@ -239,7 +236,9 @@
   <!-- See: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/alert_role -->
   <div class="toast" id="toast" role="alert"></div>
 
+  <!-- Config must load first so constants are available -->
   <script src="../JS/config.js"></script>
+   <!-- Theme script applies saved theme immediately -->
   <script src="../JS/theme.js"></script>
   <script src="../JS/index.js"></script>
 </body>

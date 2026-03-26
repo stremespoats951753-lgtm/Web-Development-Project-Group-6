@@ -185,7 +185,7 @@ function formatTimestamp(value) {
 }
 
 /**
- * Maps avatar text to a CSS colour class.
+ * Maps avatar text to a CSS color class.
  * Uses AVATAR_COLOR_MAP from config.js.
  */
 function getAvatarClassFromText(text) {

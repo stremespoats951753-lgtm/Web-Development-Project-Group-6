@@ -22,8 +22,6 @@
   See: https://developer.mozilla.org/en-US/docs/Web/CSS/max-height
 
   RESOURCES:
-  - Semantic HTML5: https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-  - Flexbox layout: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout
   - ARIA roles: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
   ============================================================
 -->
@@ -118,7 +116,7 @@
         <div id="profilePostsContainer"></div>
       </section>
     </main>
-
+    <!-- Redundant -->
     <!-- RIGHT SIDEBAR -->
     <!-- <aside class="sidebar-right">
       <div class="widget">
@@ -169,7 +167,6 @@
     all comments, and interactive like/comment actions.
     It mirrors the modal from index.html so the profile page
     has the same post interaction functionality.
-    See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article
   -->
   <div class="modal-overlay" id="postModalOverlay" onclick="handlePostModalOverlayClick(event)">
     <article class="modal post-detail-modal">
@@ -211,7 +208,7 @@
 
   <!-- Toast -->
   <div class="toast" id="toast" role="alert"></div>
-
+  <!-- Config must load first so constants are available -->
   <script src="../JS/config.js"></script>
   <script src="../JS/theme.js"></script>
   <script src="../JS/profile.js"></script>
