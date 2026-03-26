@@ -1,4 +1,0 @@
-confirmLogout.addEventListener('click', () => {
-  localStorage.removeItem('gf_session');
-  window.location.replace('login.html');
-});
