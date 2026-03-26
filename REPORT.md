@@ -93,11 +93,13 @@ The current project works well as a front-end academic project and already meets
 | Centralised Config File              | Implemented     | config.js holds all constants and defaults                                                                                                      |
 | Search Functionality                 | Not Implemented | This feature was not completed due to time constraints                                                                                          |
 | Saved Posts                          | Not Implemented | This feature was planned but not completed within the project timeframe                                                                         |
-| Browse Games                         | Not Implemented | Implementing this properly would likely require backend support and integration with the Steam API, which was beyond the current project scope. |
-| Share Button                         | Not Implemented | A complete sharing feature would require additional logic and possibly integration with external services.                                      |
-| Achievements / Discussion / Trending | Not Implemented | These features would require more advanced data handling and backend support, which were not included in the current version of the project.    |
-
-
+| Browse Games                         | Not Implemented | Implementing this properly would likely require backend support and integration with the Steam API, which was beyond the current project scope |
+| Share Button                         | Not Implemented | A complete sharing feature would require additional logic and possibly integration with external services                                      |
+| Achievements / Discussion / Trending | Not Implemented | These features would require more advanced data handling and backend support, which were not included in the current version of the project    |
+| Choosing a Random Background | Not Implemented | Problems with scaling SVG Pictures as backgrounds, thus this feature was not completed due to time |
+| Adding a right sidebar in profile page | Not Implemented |  This feature was planned but not completed within the project |
+| Fully Documented using JSDoc | Not Implemented |  Due to time constraints, JSDoc was only partially implemented, with many functions and parameters left undocumented |
+| Interacting with comments | Not Implemented |  This feature was not completed due to time |
 ---
 ## How to Use the Application
 
