@@ -25,6 +25,12 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+  /*
+   * Multiple background layers are stacked here using radial gradients plus
+   * a solid fallback color variable.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_backgrounds_and_borders/Using_multiple_backgrounds
+   */
   background:
     radial-gradient(circle at top left, rgba(0,245,160,0.07), transparent 25%),
     radial-gradient(circle at bottom right, rgba(245,166,35,0.06), transparent 22%),
@@ -44,6 +50,10 @@ body {
   min-height: 680px;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
+   /*
+   * A subtle linear gradient is layered on top of the panel background.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
+   */
   background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -63,6 +73,10 @@ body {
 }
 
 .brand-logo {
+   /*
+   * clamp() keeps the logo text responsive between a minimum and maximum size.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
+   */
   font-size: clamp(2rem, 5vw, 3.4rem);
   font-weight: 900;
   letter-spacing: 2px;
@@ -197,6 +211,11 @@ body {
   color: var(--danger);
 }
 
+/*
+ * The button uses a gradient plus small transitions for a more polished hover effect.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
+ */
 .submit-btn {
   width: 100%;
   padding: 15px 18px;
@@ -259,6 +278,11 @@ body {
 }
 /* ─── Theme Toggle Button ──────────────────────────────── */
 .btn-theme {
+   /*
+   * fixed positioning keeps the theme button anchored to the viewport,
+   * even while the page scrolls.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   */
   position: fixed;
   bottom: 20px;
   right: 20px;

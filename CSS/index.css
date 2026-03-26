@@ -16,6 +16,12 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+   /*
+   * position: sticky keeps the header pinned after scrolling past it.
+   * z-index makes sure it stays above the content below.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+   */
 }
 
 
@@ -59,6 +65,12 @@ header input {
   font-weight: bold;
 }
 
+
+/*
+ * This button uses a linear gradient plus transition-based hover feedback.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+ */
 .btn-logout {
   padding: 10px 16px;
   border: none;
@@ -81,6 +93,11 @@ header input {
   box-shadow: none;
 }
 
+
+/*
+ * Flexbox is used here for the three-column page layout.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout
+ */
 .app-layout {
   display: flex;
   gap: 16px;
@@ -333,6 +350,12 @@ header input {
   color: #fff;
 }
 
+/*
+ * calc() is used to approximate a 3-line text clamp using line-height.
+ * Combined with overflow: hidden, it trims longer post previews.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+ */
 .card-content {
   display: flex;
   flex-direction: column;
@@ -379,6 +402,12 @@ header input {
   cursor: pointer;
 }
 
+/*
+ * The modal overlay covers the whole viewport using fixed positioning.
+ * inset: 0 is a shorthand for top/right/bottom/left = 0.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/inset
+ */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -523,6 +552,10 @@ header input {
   margin-top: 6px;
 }
 
+/*
+ * The toast uses transform for centering and slide-in animation.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+ */
 .toast {
   position: fixed;
   bottom: 24px;
@@ -580,6 +613,11 @@ header input {
    LIGHT THEME OVERRIDES
    Converts the dark gaming aesthetic to a clean light look.
    ═══════════════════════════════════════════════════════════ */
+/*
+ * Theme overrides switch the palette by scoping rules under body.light-theme.
+ * This is a common way to implement dark/light themes without duplicating HTML.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors
+ */
 body.light-theme {
   background: #f4f6f9;
   color: #1a1a2e;

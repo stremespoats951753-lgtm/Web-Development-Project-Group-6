@@ -1,3 +1,7 @@
+/*
+ * CSS custom properties make the auth page theme easier to maintain.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+ */
 :root {
   --bg-main: #070912;
   --bg-panel: #12182b;
@@ -42,9 +46,18 @@ body {
   display: grid;
   place-items: center;
   padding: 22px;
+  /*
+   * place-items centers the whole login shell vertically and horizontally.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/place-items
+   */
+
 }
 
 .auth-shell {
+  /*
+   * Grid is used to split the page into two equal panels.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+   */
   width: min(980px, 100%);
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -180,6 +193,11 @@ h2 {
 }
 
 /* Buttons */
+/*
+ * Hover effects below use transform and box-shadow for simple motion feedback.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+ */
 .btn-primary {
   width: 100%;
   padding: 15px 18px;
@@ -215,6 +233,11 @@ h2 {
 }
 
 /* Theme button */
+/*
+   * fixed positioning pins the theme button to the viewport corner.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   */
+
 .btn-theme {
   position: fixed;
   right: 20px;
@@ -270,6 +293,11 @@ h2 {
 }
 
 /* Light theme */
+
+/*
+ * Theme switching is done by overriding variables under body.light-theme.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors
+ */
 body.light-theme {
   --bg-main: #f4f6f9;
   --bg-panel: #ffffff;
