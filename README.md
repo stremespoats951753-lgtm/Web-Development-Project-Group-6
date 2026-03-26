@@ -162,7 +162,7 @@ Posts are displayed differently depending on the context:
 | ----------- | --------------- | -------------------------------------------------------------------------------------------- |
 | **Feed**    | Truncated       | Keeps the timeline scannable. Long posts would dominate the feed and make scrolling tedious. |
 | **Modal**   | Full content    | The user explicitly clicked to read more, so the complete post + comments are shown.         |
-| **Profile** | Full content    | The profile is focused on one user's output with fewer posts, so truncation is unnecessary.  |
+| **Profile** | Truncated       | Inherited from feed                                                                          |
 
 This is implemented via CSS: the `.card-content` class in `index.css` has a `max-height` property that limits visible text to ~3 lines, while `profile.css` and the modal have no such limit.
 

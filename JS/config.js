@@ -55,7 +55,7 @@ const MIN_USERNAME_LENGTH = 3;
 const MIN_PASSWORD_LENGTH = 6;
 
 /** Maximum length of a post title */
-const MAX_POST_TITLE_LENGTH = 100;
+const MAX_POST_TITLE_LENGTH = 199;
 
 /** Maximum length of a user bio */
 const MAX_BIO_LENGTH = 200;

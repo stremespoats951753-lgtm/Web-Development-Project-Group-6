@@ -407,11 +407,27 @@ header input {
   color: #7a6fff;
 }
 
-.card-title {
+/* .card-title {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 8px;
   color: #fff;
+} */
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.card-content {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.6;
 }
 
 /*
@@ -495,11 +511,31 @@ header input {
   max-height: 85vh;
   overflow-y: auto;
 }
+.post-detail-modal {
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.modal-body,
+.comments-section,
+.comment-bubble {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.modal-text,
+.comment-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 
 .modal-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .modal-text {

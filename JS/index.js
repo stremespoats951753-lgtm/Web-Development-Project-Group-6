@@ -541,6 +541,11 @@ function submitPost() {
     return;
   }
 
+  if (title.length > MAX_POST_TITLE_LENGTH) {
+    showToast(`Post title cannot be more than ${MAX_POST_TITLE_LENGTH} characters.`);
+    return;
+  }
+  
   const data = getAppData();
   const currentUser = getCurrentUser(data);
 
@@ -623,6 +628,8 @@ function scrollToCreate() {
   document.getElementById("create-post-box").scrollIntoView({ behavior: "smooth", block: "center" });
   document.getElementById("post-title").focus();
 }
+
+
 
 /* ══════════════════════════════════════════════════════════
    POST DETAIL MODAL
