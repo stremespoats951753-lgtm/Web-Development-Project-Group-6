@@ -37,6 +37,7 @@
   content with like/comment/delete functionality.
   ============================================================
 -->
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -94,11 +95,15 @@
             <input type="text" id="post-title" placeholder="Post title..." maxlength="100" aria-label="Post title" />
             <!-- Post type selection chips -->
             <div class="type-chips">
-              <button type="button" class="type-chip update selected" onclick="selectType('update',this)">UPDATE</button>
-              <button type="button" class="type-chip achievement" onclick="selectType('achievement',this)">ACHIEVEMENT</button>
-              <button type="button" class="type-chip discussion" onclick="selectType('discussion',this)">DISCUSSION</button>
+              <button type="button" class="type-chip update selected"
+                onclick="selectType('update',this)">UPDATE</button>
+              <button type="button" class="type-chip achievement"
+                onclick="selectType('achievement',this)">ACHIEVEMENT</button>
+              <button type="button" class="type-chip discussion"
+                onclick="selectType('discussion',this)">DISCUSSION</button>
             </div>
-            <textarea id="post-content" rows="3" placeholder="What's happening in your game world?" aria-label="Post content"></textarea>
+            <textarea id="post-content" rows="3" placeholder="What's happening in your game world?"
+              aria-label="Post content"></textarea>
             <div class="post-footer">
               <button type="button" class="btn-cancel" onclick="clearForm()">CLEAR</button>
               <button type="button" class="btn-submit" onclick="submitPost()">POST IT</button>
@@ -224,7 +229,8 @@
       <div class="comments-section">
         <div class="comments-header">COMMENTS <span id="comments-count-label">(0)</span></div>
         <div class="comment-input-row">
-          <textarea id="comment-input" rows="2" placeholder="Join the discussion..." aria-label="Write a comment"></textarea>
+          <textarea id="comment-input" rows="2" placeholder="Join the discussion..."
+            aria-label="Write a comment"></textarea>
           <button class="btn-comment" onclick="submitComment()">POST</button>
         </div>
         <div id="comments-list"></div>
@@ -238,8 +244,9 @@
 
   <!-- Config must load first so constants are available -->
   <script src="../JS/config.js"></script>
-   <!-- Theme script applies saved theme immediately -->
+  <!-- Theme script applies saved theme immediately -->
   <script src="../JS/theme.js"></script>
   <script src="../JS/index.js"></script>
 </body>
+
 </html>

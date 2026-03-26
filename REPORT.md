@@ -70,36 +70,36 @@ The current project works well as a front-end academic project and already meets
 
 ## Features Checklist
 
-| Feature                              | Status          | Notes                                                                                                                                           |
-| ------------------------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| User Registration                    | Implemented     | With validation (username, email, password, confirm password)                                                                                   |
-| User Login                           | Implemented     | Credentials checked against localStorage                                                                                                        |
-| User Logout                          | Implemented     | Clears session and redirects to login                                                                                                           |
-| User Profile Page                    | Implemented     | Shows avatar, bio, stats, and user's posts                                                                                                      |
-| Edit Profile (Username & Bio)        | Implemented     | Updates propagate to all user's posts                                                                                                           |
-| News Feed                            | Implemented     | Shows posts from followed users (or all if following nobody)                                                                                    |
-| Create New Post                      | Implemented     | With title, content, and type selection                                                                                                         |
-| Delete Own Post                      | Implemented     | Only the author can delete                                                                                                                      |
-| View Single Post (Modal)             | Implemented     | Full content + comments in a modal overlay                                                                                                      |
-| Like / Unlike Posts                  | Implemented     | Like count updates and persists                                                                                                                 |
-| Comment on Posts                     | Implemented     | Comments saved and displayed in modal                                                                                                           |
-| Follow / Unfollow Users              | Implemented     | Users cannot follow themselves; feed reflects follows                                                                                           |
-| Light / Dark Theme Toggle            | Implemented     | Persists in localStorage across reloads                                                                                                         |
-| Responsive Design                    | Implemented     | Desktop, tablet, and mobile via CSS Flexbox/Grid                                                                                                |
-| Semantic HTML5                       | Implemented     | Uses header, main, nav, aside, section, article                                                                                                 |
-| CSS Flexbox & Grid Layouts           | Implemented     | No CSS frameworks used                                                                                                                          |
-| localStorage with JSON               | Implemented     | All data structured as JSON                                                                                                                     |
-| SVG Icons                            | Implemented     | Heart, comment, share, delete, theme toggle icons                                                                                               |
-| Centralised Config File              | Implemented     | config.js holds all constants and defaults                                                                                                      |
-| Search Functionality                 | Not Implemented | This feature was not completed due to time constraints                                                                                          |
-| Saved Posts                          | Not Implemented | This feature was planned but not completed within the project timeframe                                                                         |
-| Browse Games                         | Not Implemented | Implementing this properly would likely require backend support and integration with the Steam API, which was beyond the current project scope |
-| Share Button                         | Not Implemented | A complete sharing feature would require additional logic and possibly integration with external services                                      |
-| Achievements / Discussion / Trending | Not Implemented | These features would require more advanced data handling and backend support, which were not included in the current version of the project    |
-| Choosing a Random Background | Not Implemented | Problems with scaling SVG Pictures as backgrounds, thus this feature was not completed due to time |
-| Adding a right sidebar in profile page | Not Implemented |  This feature was planned but not completed within the project |
-| Fully Documented using JSDoc | Not Implemented |  Due to time constraints, JSDoc was only partially implemented, with many functions and parameters left undocumented |
-| Interacting with comments | Not Implemented |  This feature was not completed due to time |
+| Feature                                | Status          | Notes                                                                                                                                          |
+| -------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Registration                      | Implemented     | With validation (username, email, password, confirm password)                                                                                  |
+| User Login                             | Implemented     | Credentials checked against localStorage                                                                                                       |
+| User Logout                            | Implemented     | Clears session and redirects to login                                                                                                          |
+| User Profile Page                      | Implemented     | Shows avatar, bio, stats, and user's posts                                                                                                     |
+| Edit Profile (Username & Bio)          | Implemented     | Updates propagate to all user's posts                                                                                                          |
+| News Feed                              | Implemented     | Shows posts from followed users (or all if following nobody)                                                                                   |
+| Create New Post                        | Implemented     | With title, content, and type selection                                                                                                        |
+| Delete Own Post                        | Implemented     | Only the author can delete                                                                                                                     |
+| View Single Post (Modal)               | Implemented     | Full content + comments in a modal overlay                                                                                                     |
+| Like / Unlike Posts                    | Implemented     | Like count updates and persists                                                                                                                |
+| Comment on Posts                       | Implemented     | Comments saved and displayed in modal                                                                                                          |
+| Follow / Unfollow Users                | Implemented     | Users cannot follow themselves; feed reflects follows                                                                                          |
+| Light / Dark Theme Toggle              | Implemented     | Persists in localStorage across reloads                                                                                                        |
+| Responsive Design                      | Implemented     | Desktop, tablet, and mobile via CSS Flexbox/Grid                                                                                               |
+| Semantic HTML5                         | Implemented     | Uses header, main, nav, aside, section, article                                                                                                |
+| CSS Flexbox & Grid Layouts             | Implemented     | No CSS frameworks used                                                                                                                         |
+| localStorage with JSON                 | Implemented     | All data structured as JSON                                                                                                                    |
+| SVG Icons                              | Implemented     | Heart, comment, share, delete, theme toggle icons                                                                                              |
+| Centralised Config File                | Implemented     | config.js holds all constants and defaults                                                                                                     |
+| Search Functionality                   | Not Implemented | This feature was not completed due to time constraints                                                                                         |
+| Saved Posts                            | Not Implemented | This feature was planned but not completed within the project timeframe                                                                        |
+| Browse Games                           | Not Implemented | Implementing this properly would likely require backend support and integration with the Steam API, which was beyond the current project scope |
+| Share Button                           | Not Implemented | A complete sharing feature would require additional logic and possibly integration with external services                                      |
+| Achievements / Discussion / Trending   | Not Implemented | These features would require more advanced data handling and backend support, which were not included in the current version of the project    |
+| Choosing a Random Background           | Not Implemented | Problems with scaling SVG Pictures as backgrounds, thus this feature was not completed due to time                                             |
+| Adding a right sidebar in profile page | Not Implemented | This feature was planned but not completed within the project                                                                                  |
+| Fully Documented using JSDoc           | Not Implemented | Due to time constraints, JSDoc was only partially implemented, with many functions and parameters left undocumented                            |
+| Interacting with comments              | Not Implemented | This feature was not completed due to time constraints                                                                                         |
 ---
 ## How to Use the Application
 

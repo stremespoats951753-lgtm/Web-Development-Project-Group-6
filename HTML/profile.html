@@ -25,6 +25,7 @@
   - ARIA roles: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
   ============================================================
 -->
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -129,88 +130,91 @@
     </aside>
   </div> -->
 
-  <!-- ═══════ EDIT PROFILE MODAL ═══════ -->
-  <div class="modal-overlay" id="editProfileModal">
-    <div class="modal">
-      <div class="modal-top-bar"></div>
+    <!-- ═══════ EDIT PROFILE MODAL ═══════ -->
+    <div class="modal-overlay" id="editProfileModal">
+      <div class="modal">
+        <div class="modal-top-bar"></div>
 
-      <div class="modal-header">
-        <div>
-          <div class="modal-heading">Edit Profile</div>
-          <div class="modal-subheading">Update your public information</div>
-        </div>
-        <div class="modal-close" onclick="closeEditProfile()">✕</div>
-      </div>
-
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="editUsernameInput">Username</label>
-          <input type="text" id="editUsernameInput" maxlength="30" />
+        <div class="modal-header">
+          <div>
+            <div class="modal-heading">Edit Profile</div>
+            <div class="modal-subheading">Update your public information</div>
+          </div>
+          <div class="modal-close" onclick="closeEditProfile()">✕</div>
         </div>
 
-        <div class="form-group">
-          <label for="editBioInput">Bio</label>
-          <textarea id="editBioInput" rows="4" maxlength="200"></textarea>
-        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editUsernameInput">Username</label>
+            <input type="text" id="editUsernameInput" maxlength="30" />
+          </div>
 
-        <div class="modal-actions">
-          <button class="modal-action-btn" onclick="closeEditProfile()">Cancel</button>
-          <button class="btn-submit" onclick="saveProfileEdits()">Save Changes</button>
+          <div class="form-group">
+            <label for="editBioInput">Bio</label>
+            <textarea id="editBioInput" rows="4" maxlength="200"></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button class="modal-action-btn" onclick="closeEditProfile()">Cancel</button>
+            <button class="btn-submit" onclick="saveProfileEdits()">Save Changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ═══════ POST DETAIL MODAL ═══════ -->
-  <!--
+    <!-- ═══════ POST DETAIL MODAL ═══════ -->
+    <!--
     This modal shows the FULL post content (no truncation),
     all comments, and interactive like/comment actions.
     It mirrors the modal from index.html so the profile page
     has the same post interaction functionality.
   -->
-  <div class="modal-overlay" id="postModalOverlay" onclick="handlePostModalOverlayClick(event)">
-    <article class="modal post-detail-modal">
-      <div class="modal-top-bar" id="postModalTopBar"></div>
+    <div class="modal-overlay" id="postModalOverlay" onclick="handlePostModalOverlayClick(event)">
+      <article class="modal post-detail-modal">
+        <div class="modal-top-bar" id="postModalTopBar"></div>
 
-      <div class="modal-header">
-        <div class="av green" id="postModalAvatar" style="width:44px;height:44px;border-radius:6px;font-size:16px;"></div>
-        <div>
-          <div style="font-size:14px;font-weight:bold" id="postModalUsername"></div>
-          <div style="font-size:11px;color:#555" id="postModalTimestamp"></div>
+        <div class="modal-header">
+          <div class="av green" id="postModalAvatar" style="width:44px;height:44px;border-radius:6px;font-size:16px;">
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:bold" id="postModalUsername"></div>
+            <div style="font-size:11px;color:#555" id="postModalTimestamp"></div>
+          </div>
+          <div class="modal-close" onclick="closePostModal()">✕</div>
         </div>
-        <div class="modal-close" onclick="closePostModal()">✕</div>
-      </div>
 
-      <div class="modal-body">
-        <div class="modal-title" id="postModalTitle"></div>
-        <div class="modal-text" id="postModalContent"></div>
-        <div class="modal-actions">
-          <button class="modal-action-btn" id="postModalLikeBtn" onclick="modalPostToggleLike()">
-            <span id="postModalLikesCount">0</span> Likes
-          </button>
-          <button class="modal-action-btn">Comment</button>
-          <button class="modal-action-btn">Share</button>
-          <button class="modal-action-btn">Save</button>
+        <div class="modal-body">
+          <div class="modal-title" id="postModalTitle"></div>
+          <div class="modal-text" id="postModalContent"></div>
+          <div class="modal-actions">
+            <button class="modal-action-btn" id="postModalLikeBtn" onclick="modalPostToggleLike()">
+              <span id="postModalLikesCount">0</span> Likes
+            </button>
+            <button class="modal-action-btn">Comment</button>
+            <button class="modal-action-btn">Share</button>
+            <button class="modal-action-btn">Save</button>
+          </div>
         </div>
-      </div>
 
-      <!-- Comments section -->
-      <div class="comments-section">
-        <div class="comments-header">COMMENTS <span id="postModalCommentsLabel">(0)</span></div>
-        <div class="comment-input-row">
-          <textarea id="postModalCommentInput" rows="2" placeholder="Join the discussion..." aria-label="Write a comment"></textarea>
-          <button class="btn-comment" onclick="submitProfileComment()">POST</button>
+        <!-- Comments section -->
+        <div class="comments-section">
+          <div class="comments-header">COMMENTS <span id="postModalCommentsLabel">(0)</span></div>
+          <div class="comment-input-row">
+            <textarea id="postModalCommentInput" rows="2" placeholder="Join the discussion..."
+              aria-label="Write a comment"></textarea>
+            <button class="btn-comment" onclick="submitProfileComment()">POST</button>
+          </div>
+          <div id="postModalCommentsList"></div>
         </div>
-        <div id="postModalCommentsList"></div>
-      </div>
-    </article>
-  </div>
+      </article>
+    </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast" role="alert"></div>
-  <!-- Config must load first so constants are available -->
-  <script src="../JS/config.js"></script>
-  <script src="../JS/theme.js"></script>
-  <script src="../JS/profile.js"></script>
+    <!-- Toast -->
+    <div class="toast" id="toast" role="alert"></div>
+    <!-- Config must load first so constants are available -->
+    <script src="../JS/config.js"></script>
+    <script src="../JS/theme.js"></script>
+    <script src="../JS/profile.js"></script>
 </body>
+
 </html>
