@@ -1,0 +1,322 @@
+:root {
+  --bg-main: #070912;
+  --bg-panel: #0d1120;
+  --bg-card: #12182b;
+  --bg-input: #0a0e1a;
+  --border: #242b40;
+  --text-main: #e8ecf7;
+  --text-muted: #8f98b2;
+  --green: #00f5a0;
+  --orange: #f5a623;
+  --orange-soft: rgba(245, 166, 35, 0.12);
+  --danger: #ff5f73;
+  --white: #ffffff;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(0,245,160,0.07), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(245,166,35,0.06), transparent 22%),
+    var(--bg-main);
+  color: var(--text-main);
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-shell {
+  width: min(1100px, 100%);
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.auth-brand-panel {
+  padding: 48px;
+  background:
+    linear-gradient(180deg, rgba(0,245,160,0.04), transparent 40%),
+    linear-gradient(135deg, #0a0f1d, #10182d);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-logo {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.brand-green {
+  color: var(--green);
+}
+
+.brand-orange {
+  color: var(--orange);
+}
+
+.brand-tagline {
+  max-width: 500px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 34px;
+}
+
+.brand-cards {
+  display: grid;
+  gap: 18px;
+}
+
+.mini-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.mini-card h3 {
+  margin: 10px 0 8px;
+  font-size: 1.15rem;
+}
+
+.mini-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.mini-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--orange);
+  background: var(--orange-soft);
+  border: 1px solid rgba(245,166,35,0.25);
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.auth-form-panel {
+  padding: 42px 36px;
+  background: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form h2 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
+
+.form-subtitle {
+  margin: 0 0 26px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--white);
+  outline: none;
+  font-size: 0.98rem;
+  transition: 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0,245,160,0.12);
+}
+
+.input-group input.error {
+  border-color: var(--danger);
+}
+
+.error-text {
+  display: block;
+  min-height: 18px;
+  margin-top: 6px;
+  color: var(--danger);
+  font-size: 0.83rem;
+}
+
+.global-message {
+  display: block;
+  min-height: 20px;
+  margin: 4px 0 18px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.global-message.success {
+  color: var(--green);
+}
+
+.global-message.error {
+  color: var(--danger);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--green), #5affd7);
+  color: #07111a;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0,245,160,0.18);
+}
+
+.bottom-link {
+  margin-top: 18px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.bottom-link a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.bottom-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 920px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-brand-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-page {
+    padding: 14px;
+  }
+
+  .auth-brand-panel,
+  .auth-form-panel {
+    padding: 26px 20px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.65rem;
+  }
+}
+/* ─── Theme Toggle Button ──────────────────────────────── */
+.btn-theme {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-theme:hover {
+  background: var(--green);
+  color: #000;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ═══════════════════════════════════════════════════════════ */
+body.light-theme {
+  --bg-main: #f4f6f9;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f0f2f5;
+  --border: #d0d5dd;
+  --text-main: #1a1a2e;
+  --text-muted: #6b7280;
+  --green: #00c87a;
+  --orange: #e09520;
+  --danger: #dc3545;
+  --white: #1a1a2e;
+
+  background:
+    radial-gradient(circle at top left, rgba(0,200,122,0.06), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(224,149,32,0.05), transparent 22%),
+    var(--bg-main);
+  color: var(--text-main);
+}
+
+body.light-theme .auth-brand-panel {
+  background: linear-gradient(180deg, rgba(0,200,122,0.04), transparent 40%), #eef2f7;
+}
+
+body.light-theme .auth-form-panel {
+  background: #ffffff;
+}
+
+body.light-theme .input-group input {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--border);
+}
+
+body.light-theme .mini-card {
+  background: rgba(0,0,0,0.03);
+}

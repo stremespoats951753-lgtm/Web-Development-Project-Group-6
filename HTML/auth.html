@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================
+  auth.html — Login Page for GamerFeed
+  ============================================================
+  This page allows existing users to log in with their email
+  and password. Credentials are validated against user records
+  stored in localStorage (JSON).
+
+  On successful login the user's ID is saved as currentUserId
+  in the app data and the browser redirects to the main feed.
+  ============================================================
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GamerFeed | Login</title>
+  <link rel="stylesheet" href="../CSS/auth.css" />
+</head>
+
+<body id="random-bg">
+  <main class="auth-page">
+    <section class="auth-shell">
+
+      <!-- LEFT SIDE — Brand panel with tagline and features -->
+      <div class="brand-panel">
+        <h1 class="logo">
+          <span class="green">GAMER</span><span class="orange">FEED</span>
+        </h1>
+
+        <p class="tagline">
+          Share achievements. Discover players. Stay in the game.
+        </p>
+
+        <!-- Feature highlights shown next to the login form -->
+        <div class="feature-box">
+          <p>🎮 Track achievements</p>
+          <p>🔥 Follow top players</p>
+          <p>💬 Join discussions</p>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE — Login form -->
+      <div class="form-panel">
+        <form id="loginForm" novalidate>
+          <h2>Welcome Back</h2>
+          <p class="subtitle">Log in to continue</p>
+
+          <!-- Email input with inline validation error -->
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email" />
+            <small id="emailError"></small>
+          </div>
+
+          <!-- Password input with inline validation error -->
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" />
+            <small id="passwordError"></small>
+          </div>
+
+          <!-- General login feedback message -->
+          <small id="loginMessage"></small>
+
+          <button type="submit" class="btn-primary">LOGIN</button>
+
+          <!-- Link to the registration page -->
+          <a href="register.html" class="btn-secondary">CREATE ACCOUNT</a>
+        </form>
+
+        <!-- Theme toggle button in the corner -->
+        <button id="themeToggleBtn" class="btn-theme" aria-label="Toggle theme"></button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Config must load first so constants are available -->
+  <script src="../JS/config.js"></script>
+  <!-- Theme script applies saved theme immediately -->
+  <script src="../JS/theme.js"></script>
+  <!-- Auth logic (form validation, login) -->
+  <script src="../JS/auth.js"></script>
+</body>
+</html>
