@@ -28,8 +28,8 @@ body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(0,245,160,0.08), transparent 24%),
-    radial-gradient(circle at bottom right, rgba(245,166,35,0.08), transparent 22%),
+    radial-gradient(circle at top left, rgba(0, 245, 160, 0.08), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(245, 166, 35, 0.08), transparent 22%),
     var(--bg-main);
   color: var(--text-main);
 }
@@ -73,7 +73,7 @@ body {
 .brand-panel {
   padding: 42px 36px;
   background:
-    linear-gradient(180deg, rgba(0,245,160,0.06), transparent 40%),
+    linear-gradient(180deg, rgba(0, 245, 160, 0.06), transparent 40%),
     var(--bg-panel);
   border-right: 1px solid var(--border);
   display: flex;
@@ -112,9 +112,9 @@ body {
 .feature-box p {
   margin: 0;
   padding: 16px 18px;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-md);
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-main);
   line-height: 1.65;
 }
@@ -173,7 +173,7 @@ h2 {
 
 .input-group input:focus {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(0,245,160,0.12);
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.12);
 }
 
 #emailError,
@@ -214,7 +214,7 @@ h2 {
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0,245,160,0.18);
+  box-shadow: 0 12px 24px rgba(0, 245, 160, 0.18);
 }
 
 .btn-secondary {
@@ -312,14 +312,14 @@ body.light-theme {
   --white: #1a1a2e;
 
   background:
-    radial-gradient(circle at top left, rgba(0,200,122,0.06), transparent 25%),
-    radial-gradient(circle at bottom right, rgba(224,149,32,0.05), transparent 22%),
+    radial-gradient(circle at top left, rgba(0, 200, 122, 0.06), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(224, 149, 32, 0.05), transparent 22%),
     var(--bg-main);
   color: var(--text-main);
 }
 
 body.light-theme .brand-panel {
-  background: linear-gradient(180deg, rgba(0,200,122,0.04), transparent 40%), #eef2f7;
+  background: linear-gradient(180deg, rgba(0, 200, 122, 0.04), transparent 40%), #eef2f7;
 }
 
 body.light-theme .form-panel {
@@ -333,6 +333,6 @@ body.light-theme .input-group input {
 }
 
 body.light-theme .feature-box p {
-  background: rgba(0,0,0,0.03);
-  border-color: rgba(0,0,0,0.06);
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
 }

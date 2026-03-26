@@ -658,9 +658,9 @@ function saveProfileEdits() {
     return;
   }
   if (!USERNAME_PATTERN.test(newUsername)) {
-  showToast("Username can only contain letters, numbers, and underscores.");
-  return;
-}
+    showToast("Username can only contain letters, numbers, and underscores.");
+    return;
+  }
 
   const data = getAppData();
 

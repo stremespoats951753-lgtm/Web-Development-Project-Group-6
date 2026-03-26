@@ -545,7 +545,7 @@ function submitPost() {
     showToast(`Post title cannot be more than ${MAX_POST_TITLE_LENGTH} characters.`);
     return;
   }
-  
+
   const data = getAppData();
   const currentUser = getCurrentUser(data);
 

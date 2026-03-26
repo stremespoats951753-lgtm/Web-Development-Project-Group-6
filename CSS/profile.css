@@ -471,8 +471,14 @@ header input {
   cursor: pointer;
 }
 
-.action-btn:hover { color: #00f5a0; background: rgba(0,245,160,0.08); }
-.action-btn.liked { color: #f50057; }
+.action-btn:hover {
+  color: #00f5a0;
+  background: rgba(0, 245, 160, 0.08);
+}
+
+.action-btn.liked {
+  color: #f50057;
+}
 
 /* "Read More" link on cards */
 .read-more {
@@ -487,6 +493,7 @@ header input {
 .delete-btn {
   color: #888;
 }
+
 .delete-btn:hover {
   color: #ff4d4f;
   background: rgba(255, 77, 79, 0.12);
@@ -497,6 +504,7 @@ header input {
   cursor: pointer;
   transition: border-color 0.2s;
 }
+
 .post-card:hover {
   border-color: #444;
 }
@@ -511,6 +519,7 @@ header input {
   max-height: 85vh;
   overflow-y: auto;
 }
+
 .post-detail-modal {
   max-height: 85vh;
   overflow-y: auto;
@@ -545,11 +554,20 @@ header input {
   white-space: pre-wrap;
 }
 
-.modal-action-btn:hover { border-color: #00f5a0; color: #00f5a0; }
-.modal-action-btn.liked { color: #f50057; border-color: #f50057; }
+.modal-action-btn:hover {
+  border-color: #00f5a0;
+  color: #00f5a0;
+}
+
+.modal-action-btn.liked {
+  color: #f50057;
+  border-color: #f50057;
+}
 
 /* ═══════ COMMENTS SECTION (inside modal) ═══════ */
-.comments-section { padding: 0 16px 16px; }
+.comments-section {
+  padding: 0 16px 16px;
+}
 
 .comments-header {
   font-size: 12px;
@@ -609,9 +627,22 @@ header input {
   margin-bottom: 4px;
 }
 
-.comment-user  { font-size: 13px; font-weight: bold; color: #eee; }
-.comment-time  { font-size: 11px; color: #555; }
-.comment-text  { font-size: 13px; color: #aaa; line-height: 1.5; }
+.comment-user {
+  font-size: 13px;
+  font-weight: bold;
+  color: #eee;
+}
+
+.comment-time {
+  font-size: 11px;
+  color: #555;
+}
+
+.comment-text {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.5;
+}
 
 .comment-likes {
   display: flex;
@@ -759,10 +790,10 @@ header input {
     flex-direction: column;
   }
 
-  .sidebar-left{
+  .sidebar-left {
     width: 100%;
   }
-   
+
 }
 
 @media (max-width: 760px) {
@@ -783,6 +814,7 @@ header input {
     width: 100%;
   }
 }
+
 /* ─── Theme Toggle Button ──────────────────────────────── */
 .btn-theme {
   width: 36px;
@@ -797,6 +829,7 @@ header input {
   justify-content: center;
   transition: background 0.2s, color 0.2s;
 }
+
 .btn-theme:hover {
   background: #00f5a0;
   color: #000;
@@ -824,6 +857,7 @@ body.light-theme header input {
 body.light-theme .logo {
   color: #00c87a;
 }
+
 body.light-theme .logo span {
   color: #1a1a2e;
 }
@@ -841,6 +875,7 @@ body.light-theme .avatar-chip {
 body.light-theme .nav-item {
   color: #555;
 }
+
 body.light-theme .nav-item:hover,
 body.light-theme .nav-item.active {
   background: #e8f5ee;
@@ -889,7 +924,7 @@ body.light-theme .form-group textarea {
 }
 
 body.light-theme .modal-overlay {
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 body.light-theme .modal-action-btn {
@@ -937,19 +972,21 @@ body.light-theme .comment-input-row textarea {
 body.light-theme .post-card {
   border-left-color: #00c87a;
 }
+
 body.light-theme .post-card.achievement {
   border-left-color: #e09520;
 }
+
 body.light-theme .post-card.discussion {
   border-left-color: #6c5ce7;
 }
 
 /* ─── Extra Responsive ─────────────────────────────────── */
 @media (max-width: 900px) {
-  header{
+  header {
     justify-content: space-evenly;
   }
-  
+
   .app-layout {
     flex-direction: column;
   }
@@ -985,7 +1022,7 @@ body.light-theme .post-card.discussion {
     flex-wrap: wrap;
   }
 
-  
+
   /* .nav-label {
     width: 100%;
     margin-top: 10px;

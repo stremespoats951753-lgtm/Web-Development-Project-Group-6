@@ -32,8 +32,8 @@ body {
    * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_backgrounds_and_borders/Using_multiple_backgrounds
    */
   background:
-    radial-gradient(circle at top left, rgba(0,245,160,0.07), transparent 25%),
-    radial-gradient(circle at bottom right, rgba(245,166,35,0.06), transparent 22%),
+    radial-gradient(circle at top left, rgba(0, 245, 160, 0.07), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(245, 166, 35, 0.06), transparent 22%),
     var(--bg-main);
   color: var(--text-main);
 }
@@ -50,11 +50,11 @@ body {
   min-height: 680px;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-   /*
+  /*
    * A subtle linear gradient is layered on top of the panel background.
    * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
    */
-  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.005));
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -64,7 +64,7 @@ body {
 .auth-brand-panel {
   padding: 48px;
   background:
-    linear-gradient(180deg, rgba(0,245,160,0.04), transparent 40%),
+    linear-gradient(180deg, rgba(0, 245, 160, 0.04), transparent 40%),
     linear-gradient(135deg, #0a0f1d, #10182d);
   border-right: 1px solid var(--border);
   display: flex;
@@ -73,7 +73,7 @@ body {
 }
 
 .brand-logo {
-   /*
+  /*
    * clamp() keeps the logo text responsive between a minimum and maximum size.
    * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
    */
@@ -105,7 +105,7 @@ body {
 }
 
 .mini-card {
-  background: rgba(255,255,255,0.025);
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--border);
   border-left: 3px solid var(--orange);
   border-radius: var(--radius-md);
@@ -130,7 +130,7 @@ body {
   letter-spacing: 1px;
   color: var(--orange);
   background: var(--orange-soft);
-  border: 1px solid rgba(245,166,35,0.25);
+  border: 1px solid rgba(245, 166, 35, 0.25);
   padding: 6px 10px;
   border-radius: 999px;
   text-transform: uppercase;
@@ -180,7 +180,7 @@ body {
 
 .input-group input:focus {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(0,245,160,0.12);
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.12);
 }
 
 .input-group input.error {
@@ -232,7 +232,7 @@ body {
 
 .submit-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0,245,160,0.18);
+  box-shadow: 0 12px 24px rgba(0, 245, 160, 0.18);
 }
 
 .bottom-link {
@@ -276,9 +276,10 @@ body {
     font-size: 1.65rem;
   }
 }
+
 /* ─── Theme Toggle Button ──────────────────────────────── */
 .btn-theme {
-   /*
+  /*
    * fixed positioning keeps the theme button anchored to the viewport,
    * even while the page scrolls.
    * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
@@ -299,6 +300,7 @@ body {
   z-index: 300;
   transition: background 0.2s, color 0.2s;
 }
+
 .btn-theme:hover {
   background: var(--green);
   color: #000;
@@ -321,14 +323,14 @@ body.light-theme {
   --white: #1a1a2e;
 
   background:
-    radial-gradient(circle at top left, rgba(0,200,122,0.06), transparent 25%),
-    radial-gradient(circle at bottom right, rgba(224,149,32,0.05), transparent 22%),
+    radial-gradient(circle at top left, rgba(0, 200, 122, 0.06), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(224, 149, 32, 0.05), transparent 22%),
     var(--bg-main);
   color: var(--text-main);
 }
 
 body.light-theme .auth-brand-panel {
-  background: linear-gradient(180deg, rgba(0,200,122,0.04), transparent 40%), #eef2f7;
+  background: linear-gradient(180deg, rgba(0, 200, 122, 0.04), transparent 40%), #eef2f7;
 }
 
 body.light-theme .auth-form-panel {
@@ -342,5 +344,5 @@ body.light-theme .input-group input {
 }
 
 body.light-theme .mini-card {
-  background: rgba(0,0,0,0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
