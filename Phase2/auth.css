@@ -1,0 +1,338 @@
+/*
+ * CSS custom properties make the auth page theme easier to maintain.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+ */
+:root {
+  --bg-main: #070912;
+  --bg-panel: #12182b;
+  --bg-card: #182033;
+  --bg-input: #0a0e1a;
+  --border: #242b40;
+  --text-main: #e8ecf7;
+  --text-muted: #8f98b2;
+  --green: #00f5a0;
+  --orange: #f5a623;
+  --danger: #ff5f73;
+  --white: #ffffff;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(0, 245, 160, 0.08), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(245, 166, 35, 0.08), transparent 22%),
+    var(--bg-main);
+  color: var(--text-main);
+}
+
+#random-bg {
+  min-height: 100vh;
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  /*
+   * place-items centers the whole login shell vertically and horizontally.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/place-items
+   */
+
+}
+
+.auth-shell {
+  /*
+   * Grid is used to split the page into two equal panels.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+   */
+  width: min(980px, 100%);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(10, 14, 26, 0.7);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+/* Left panel */
+.brand-panel {
+  padding: 42px 36px;
+  background:
+    linear-gradient(180deg, rgba(0, 245, 160, 0.06), transparent 40%),
+    var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo {
+  margin: 0 0 16px;
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.green {
+  color: var(--green);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.tagline {
+  margin: 0 0 28px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 460px;
+  font-size: 1rem;
+}
+
+.feature-box {
+  display: grid;
+  gap: 14px;
+}
+
+.feature-box p {
+  margin: 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  line-height: 1.65;
+}
+
+/* Right panel */
+.form-panel {
+  padding: 42px 36px;
+  background: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#loginForm {
+  width: 100%;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  color: var(--white);
+}
+
+.subtitle {
+  margin: 0 0 26px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--white);
+  outline: none;
+  font-size: 0.98rem;
+  transition: 0.2s ease;
+}
+
+.input-group input::placeholder {
+  color: #8a94ad;
+}
+
+.input-group input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.12);
+}
+
+#emailError,
+#passwordError,
+#loginMessage {
+  display: block;
+  min-height: 18px;
+  margin-top: 6px;
+  font-size: 0.83rem;
+  color: var(--danger);
+}
+
+#loginMessage {
+  min-height: 20px;
+  margin: 4px 0 18px;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+/*
+ * Hover effects below use transform and box-shadow for simple motion feedback.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+ */
+.btn-primary {
+  width: 100%;
+  padding: 15px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--green), #5affd7);
+  color: #07111a;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0, 245, 160, 0.18);
+}
+
+.btn-secondary {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-secondary:hover {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+/* Theme button */
+/*
+   * fixed positioning pins the theme button to the viewport corner.
+   * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   */
+
+.btn-theme {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-theme:hover {
+  background: var(--green);
+  color: #000;
+}
+
+/* Responsive */
+@media (max-width: 920px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-page {
+    padding: 14px;
+  }
+
+  .brand-panel,
+  .form-panel {
+    padding: 26px 20px;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.65rem;
+  }
+}
+
+/* Light theme */
+
+/*
+ * Theme switching is done by overriding variables under body.light-theme.
+ * MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors
+ */
+body.light-theme {
+  --bg-main: #f4f6f9;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f0f2f5;
+  --border: #d0d5dd;
+  --text-main: #1a1a2e;
+  --text-muted: #6b7280;
+  --green: #00c87a;
+  --orange: #e09520;
+  --danger: #dc3545;
+  --white: #1a1a2e;
+
+  background:
+    radial-gradient(circle at top left, rgba(0, 200, 122, 0.06), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(224, 149, 32, 0.05), transparent 22%),
+    var(--bg-main);
+  color: var(--text-main);
+}
+
+body.light-theme .brand-panel {
+  background: linear-gradient(180deg, rgba(0, 200, 122, 0.04), transparent 40%), #eef2f7;
+}
+
+body.light-theme .form-panel {
+  background: #ffffff;
+}
+
+body.light-theme .input-group input {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--border);
+}
+
+body.light-theme .feature-box p {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
