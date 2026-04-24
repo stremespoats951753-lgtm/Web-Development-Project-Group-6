@@ -1,0 +1,538 @@
+/* public/styles/auth.css - Authentication page styles */
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+  box-shadow: var(--toggle-shadow);
+  transition: background 0.25s, border-color 0.25s, color 0.2s, transform 0.3s;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  transform: rotate(25deg) scale(1.08);
+}
+
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+[data-theme="light"] .icon-sun { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+
+/* Left Panel */
+.left-panel {
+  width: 45%;
+  flex-shrink: 0;
+  background: var(--panel-bg);
+  border-right: 1px solid var(--panel-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.35s, border-color 0.35s;
+}
+
+.left-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 30% 60%, rgba(0, 245, 160, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0, 245, 160, 0.10) 0%, transparent 60%);
+}
+
+[data-theme="light"] .left-panel::before {
+  background: radial-gradient(ellipse 60% 50% at 30% 60%, rgba(0, 245, 160, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0, 245, 160, 0.07) 0%, transparent 60%);
+}
+
+/* Geometric Grid Background */
+.geo-grid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.geo-grid svg {
+  width: 100%;
+  height: 100%;
+}
+
+[data-theme="dark"] .geo-grid svg {
+  opacity: 0.08;
+  color: #00f5a0;
+}
+
+[data-theme="light"] .geo-grid svg {
+  opacity: 0.12;
+  color: #009e6a;
+}
+
+/* Floating Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  animation: floatOrb var(--dur, 8s) ease-in-out infinite alternate;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+
+.orb-1 {
+  width: 200px;
+  height: 200px;
+  background: #00f5a0;
+  top: 18%;
+  left: 8%;
+  --dur: 7s;
+}
+
+.orb-2 {
+  width: 150px;
+  height: 150px;
+  background: #00c97f;
+  bottom: 22%;
+  right: 4%;
+  --dur: 9s;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 90px;
+  height: 90px;
+  background: #00a060;
+  top: 58%;
+  left: 42%;
+  --dur: 6s;
+  animation-delay: -1.5s;
+}
+
+[data-theme="dark"] .orb-1 { opacity: 0.15; }
+[data-theme="dark"] .orb-2 { opacity: 0.12; }
+[data-theme="dark"] .orb-3 { opacity: 0.20; }
+[data-theme="light"] .orb-1 { opacity: 0.07; }
+[data-theme="light"] .orb-2 { opacity: 0.06; }
+[data-theme="light"] .orb-3 { opacity: 0.09; }
+
+/* Panel Logo */
+.panel-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.logo-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 2px;
+  transition: color 0.35s;
+}
+
+/* Panel Welcome */
+.panel-welcome {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+}
+
+.panel-welcome-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.panel-welcome-eyebrow::before,
+.panel-welcome-eyebrow::after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.panel-welcome-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  transition: color 0.35s;
+}
+
+.panel-welcome-sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-weight: 300;
+  transition: color 0.35s;
+}
+
+/* Right Panel */
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  overflow-y: auto;
+  background: var(--bg);
+  transition: background 0.35s;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+/* Form Header */
+.form-header {
+  margin-bottom: 36px;
+}
+
+.form-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  display: block;
+}
+
+.form-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  transition: color 0.35s;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+  transition: color 0.35s;
+}
+
+/* Global Error/Success */
+.global-error,
+.global-success {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  animation: fadeUp 0.3s;
+}
+
+.global-error {
+  background: rgba(245, 0, 87, 0.1);
+  border: 1px solid rgba(245, 0, 87, 0.3);
+  color: var(--error);
+}
+
+.global-success {
+  background: rgba(0, 245, 160, 0.1);
+  border: 1px solid rgba(0, 245, 160, 0.3);
+  color: var(--success);
+}
+
+.global-error.show,
+.global-success.show {
+  display: flex;
+}
+
+/* Form Fields */
+.field-group {
+  margin-bottom: 20px;
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.35s;
+}
+
+.field-label a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.field-label a:hover {
+  color: var(--accent-hover);
+}
+
+.field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.field-wrap input {
+  width: 100%;
+  padding: 13px 14px 13px 44px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.25s;
+  outline: none;
+}
+
+.field-wrap input:focus {
+  border-color: var(--border-focus);
+  background: var(--input-focus-bg);
+}
+
+.field-wrap input:focus + .field-icon {
+  color: var(--accent);
+}
+
+.field-wrap input.error {
+  border-color: var(--error);
+}
+
+.field-wrap input.valid {
+  border-color: var(--success);
+}
+
+/* Password Toggle */
+.pwd-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+  transition: color 0.2s;
+}
+
+.pwd-toggle:hover {
+  color: var(--accent);
+}
+
+/* Field Error */
+.field-error {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--error);
+}
+
+.field-error.show {
+  display: flex;
+}
+
+/* Primary Button */
+.btn-primary {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: var(--btn-shadow);
+  margin-top: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 245, 160, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary .spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-primary.loading .btn-text {
+  opacity: 0;
+}
+
+.btn-primary.loading .spinner {
+  display: block;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  position: relative;
+  margin: 24px 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 60px);
+  height: 1px;
+  background: var(--border);
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+/* Social Button */
+.social-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s;
+}
+
+.social-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+/* Form Footer */
+.form-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.form-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.form-footer a:hover {
+  color: var(--accent-hover);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .left-panel {
+    display: none;
+  }
+
+  .right-panel {
+    width: 100%;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+}

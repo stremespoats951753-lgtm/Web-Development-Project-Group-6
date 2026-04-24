@@ -1,0 +1,245 @@
+/* public/styles/signup.css - Signup page specific styles */
+
+/* Steps Section */
+.steps-section {
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+.steps-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  transition: color 0.35s;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 0;
+  position: relative;
+}
+
+.step-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 43px;
+  width: 1px;
+  height: calc(100% - 13px);
+  background: var(--border);
+  transition: background 0.35s;
+}
+
+.step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--panel-bg);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-item.active .step-dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 245, 160, 0.15);
+}
+
+.step-item.done .step-dot {
+  border-color: var(--success);
+  background: var(--success);
+  color: #fff;
+}
+
+.step-content {
+  padding-top: 4px;
+}
+
+.step-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.step-item.active .step-name {
+  color: var(--text-primary);
+}
+
+.step-item.done .step-name {
+  color: var(--success);
+}
+
+.step-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  transition: color 0.35s;
+}
+
+/* Trust Badges */
+.panel-bottom {
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(0, 245, 160, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: background 0.35s, border-color 0.35s, color 0.35s;
+}
+
+[data-theme="light"] .trust-badge {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.trust-badge svg {
+  color: var(--success);
+}
+
+/* Username Status */
+.username-status {
+  position: absolute;
+  right: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+
+.username-status.checking {
+  display: flex;
+  color: var(--text-secondary);
+}
+
+.username-status.available {
+  display: flex;
+  color: var(--success);
+}
+
+.username-status.taken {
+  display: flex;
+  color: var(--error);
+}
+
+/* Password Strength Meter */
+.pwd-strength {
+  margin-top: 8px;
+}
+
+.strength-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text-muted);
+  transition: width 0.3s, background 0.3s;
+}
+
+.strength-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+/* Terms Row */
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.custom-check {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.25s;
+}
+
+.custom-check input {
+  display: none;
+}
+
+.custom-check svg {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.2s;
+  color: #000;
+}
+
+.custom-check.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.custom-check.checked svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.terms-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.terms-text a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.terms-text a:hover {
+  color: var(--accent-hover);
+}
