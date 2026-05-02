@@ -19,6 +19,30 @@ const postSelect = {
         },
     },
 
+    likes: {
+        select: {
+            userId: true,
+        },
+    },
+
+    comments: {
+        select: {
+            id: true,
+            text: true,
+            createdAt: true,
+            user: {
+                select: {
+                    id: true,
+                    username: true,
+                    avatar: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: "asc",
+        },
+    },
+
     _count: {
         select: {
             likes: true,
@@ -136,19 +160,15 @@ export async function getFeedPostsForUser(userId, type = "all") {
 
     const followingIds = following.map((item) => item.followingId);
 
-    const where = {
-        ...(type !== "all" && { type }),
-    };
-
-    if (followingIds.length > 0) {
-        where.OR = [
-            { userId: currentUserId },
-            { userId: { in: followingIds } },
-        ];
-    }
+    const visibleUserIds = [currentUserId, ...followingIds];
 
     return prisma.post.findMany({
-        where,
+        where: {
+            userId: {
+                in: visibleUserIds,
+            },
+            ...(type !== "all" && { type }),
+        },
         select: postSelect,
         orderBy: {
             createdAt: "desc",

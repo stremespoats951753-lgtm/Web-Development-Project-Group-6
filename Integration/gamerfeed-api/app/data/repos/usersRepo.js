@@ -80,11 +80,9 @@ export async function updateUser(id, data) {
             id: Number(id),
         },
         data: {
-            ...(data.username && {
-                username: data.username,
-                avatar: data.username.slice(0, 2).toUpperCase(),
-            }),
-            ...(data.bio !== undefined && { bio: data.bio }),
+            username: data.username,
+            bio: data.bio,
+            avatar: data.avatar,
         },
         select: {
             id: true,
@@ -93,6 +91,13 @@ export async function updateUser(id, data) {
             bio: true,
             avatar: true,
             createdAt: true,
+            _count: {
+                select: {
+                    posts: true,
+                    followers: true,
+                    following: true,
+                },
+            },
         },
     });
 }

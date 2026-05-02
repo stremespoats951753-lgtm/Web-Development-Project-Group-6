@@ -37,16 +37,23 @@ export async function POST(req, context) {
             return Response.json({ error: "userId is required" }, { status: 400 });
         }
 
-        await likePost(id, body.userId);
+        const alreadyLiked = await hasUserLikedPost(id, body.userId);
+
+        if (alreadyLiked) {
+            await unlikePost(id, body.userId);
+        } else {
+            await likePost(id, body.userId);
+        }
+
         const likeCount = await getPostLikeCount(id);
 
         return Response.json({
             success: true,
-            liked: true,
+            liked: !alreadyLiked,
             likeCount,
         });
     } catch (error) {
-        return Response.json({ error: "Failed to like post" }, { status: 500 });
+        return Response.json({ error: "Failed to toggle like" }, { status: 500 });
     }
 }
 

@@ -1,11 +1,21 @@
-import { getAllPosts, createPost } from "../../data/repos/postsRepo.js";
+import {
+    getAllPosts,
+    createPost,
+    getFeedPostsForUser,
+} from "../../data/repos/postsRepo.js";
 
 export async function GET(req) {
     try {
         const { searchParams } = new URL(req.url);
 
-        const type = searchParams.get("type");      // update / achievement / discussion
-        const userId = searchParams.get("userId");  // optional
+        const type = searchParams.get("type") || "all";
+        const userId = searchParams.get("userId");
+        const feedUserId = searchParams.get("feedUserId");
+
+        if (feedUserId) {
+            const posts = await getFeedPostsForUser(feedUserId, type);
+            return Response.json(posts);
+        }
 
         const posts = await getAllPosts({
             type,
