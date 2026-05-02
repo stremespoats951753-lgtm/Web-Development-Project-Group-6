@@ -4,9 +4,11 @@ import {
     deletePost,
 } from "../../../data/repos/postsRepo.js";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
     try {
-        const post = await getPostById(params.id);
+        const { id } = await context.params;
+
+        const post = await getPostById(id);
 
         if (!post) {
             return Response.json({ error: "Post not found" }, { status: 404 });
@@ -18,11 +20,12 @@ export async function GET(req, { params }) {
     }
 }
 
-export async function PATCH(req, { params }) {
+export async function PATCH(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
-        const updated = await updatePost(params.id, body);
+        const updated = await updatePost(id, body);
 
         return Response.json(updated);
     } catch (error) {
@@ -30,9 +33,11 @@ export async function PATCH(req, { params }) {
     }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
     try {
-        await deletePost(params.id);
+        const { id } = await context.params;
+
+        await deletePost(id);
 
         return Response.json({ success: true });
     } catch (error) {

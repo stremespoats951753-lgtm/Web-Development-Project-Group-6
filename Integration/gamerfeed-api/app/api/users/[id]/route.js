@@ -4,9 +4,11 @@ import {
     deleteUser,
 } from "../../../data/repos/usersRepo.js";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
     try {
-        const user = await getUserById(params.id);
+        const { id } = await context.params;
+
+        const user = await getUserById(id);
 
         if (!user) {
             return Response.json({ error: "User not found" }, { status: 404 });
@@ -21,11 +23,12 @@ export async function GET(req, { params }) {
     }
 }
 
-export async function PATCH(req, { params }) {
+export async function PATCH(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
-        const user = await updateUser(params.id, body);
+        const user = await updateUser(id, body);
 
         return Response.json(user);
     } catch (error) {
@@ -36,9 +39,11 @@ export async function PATCH(req, { params }) {
     }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
     try {
-        await deleteUser(params.id);
+        const { id } = await context.params;
+
+        await deleteUser(id);
 
         return Response.json({ success: true });
     } catch (error) {

@@ -6,22 +6,23 @@ import {
     getFollowing,
 } from "../../../../data/repos/followsRepo.js";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
     try {
+        const { id } = await context.params;
         const { searchParams } = new URL(req.url);
         const followerId = searchParams.get("followerId");
 
-        const followers = await getFollowers(params.id);
-        const following = await getFollowing(params.id);
+        const followers = await getFollowers(id);
+        const following = await getFollowing(id);
 
         let followedByCurrentUser = false;
 
         if (followerId) {
-            followedByCurrentUser = await isFollowing(followerId, params.id);
+            followedByCurrentUser = await isFollowing(followerId, id);
         }
 
         return Response.json({
-            userId: Number(params.id),
+            userId: Number(id),
             followers,
             following,
             followedByCurrentUser,
@@ -34,8 +35,9 @@ export async function GET(req, { params }) {
     }
 }
 
-export async function POST(req, { params }) {
+export async function POST(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
         if (!body.followerId) {
@@ -45,7 +47,7 @@ export async function POST(req, { params }) {
             );
         }
 
-        await followUser(body.followerId, params.id);
+        await followUser(body.followerId, id);
 
         return Response.json({
             success: true,
@@ -59,8 +61,9 @@ export async function POST(req, { params }) {
     }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
         if (!body.followerId) {
@@ -70,7 +73,7 @@ export async function DELETE(req, { params }) {
             );
         }
 
-        await unfollowUser(body.followerId, params.id);
+        await unfollowUser(body.followerId, id);
 
         return Response.json({
             success: true,
