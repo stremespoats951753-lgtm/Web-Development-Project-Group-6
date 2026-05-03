@@ -8,6 +8,8 @@ const { prisma } = require("@/lib/prisma");
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcryptjs");
 
+
+
 // list of lucide icons used as avatars (mirrors src/lib/avatars.js)
 // kept inline so the seeder dosnt need esm imports
 const AVATAR_ICONS = [
