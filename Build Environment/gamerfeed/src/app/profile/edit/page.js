@@ -84,7 +84,7 @@ export default function EditProfilePage() {
             </div>
 
             <button className="btn" onClick={saveBio} disabled={busy}>
-              {busy ? "Saving..." : "Save bio"}
+              {busy ? "Saving..." : "Save Bio"}
             </button>
             {msg && <span className="muted" style={{ marginLeft: 10 }}>{msg}</span>}
           </div>

@@ -105,21 +105,6 @@ export default function StatsPage() {
             </div>
           </div>
 
-          {/* posts per day last 7 days, tiny custom bar chart */}
-          <div className="card">
-            <div className="widget-title">Posts per day (last 7 days)</div>
-            <div className="bar-chart">
-              {data.perDay.length === 0 && <div className="muted">No posts in the last week.</div>}
-              {data.perDay.map((d) => (
-                <div key={d.day} style={{ flex: 1 }}>
-                  <div className="bar" style={{ height: `${(d.count / maxPerDay) * 100}%` }} />
-                  <div className="bar-label">{d.day.slice(5)}</div>
-                  <div className="bar-label" style={{ color: "var(--green)" }}>{d.count}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* top liked posts */}
           <div className="card">
             <div className="widget-title">Top 5 most liked posts</div>
