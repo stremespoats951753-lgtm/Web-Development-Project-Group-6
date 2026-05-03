@@ -14,7 +14,13 @@ export default function Following() {
 
   const load = useCallback(async () => {
     setPostsLoading(true);
-    const r = await fetch(me ? "/api/posts/feed" : "/api/posts");
+    // read tag from URL so ?tag=xxx works on this page
+    const sp = new URLSearchParams(window.location.search);
+    const tag = sp.get("tag");
+    // pick endpoint: logged in = following feed, otherwise all posts
+    const base = me ? "/api/posts/feed" : "/api/posts";
+    const url = tag ? `${base}?tag=${encodeURIComponent(tag)}` : base;
+    const r = await fetch(url);
     if (r.ok) {
       const d = await r.json();
       setPosts(d.posts || []);

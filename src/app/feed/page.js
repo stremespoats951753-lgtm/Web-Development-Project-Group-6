@@ -14,18 +14,23 @@ export default function FeedPage() {
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(true);
 
-  const load = useCallback(async () => {
-    setPostsLoading(true);
-    const r = await fetch("/api/posts");
-    if (r.ok) {
-      const d = await r.json();
-      setPosts(d.posts || []);
-    }
-    setPostsLoading(false);
-  }, [me]);
+const load = useCallback(async () => {
+  setPostsLoading(true);
+  // grab tag from query string so filtering works on this page too
+  const sp = new URLSearchParams(window.location.search);
+  const tag = sp.get("tag");
+  const url = tag ? `/api/posts?tag=${encodeURIComponent(tag)}` : "/api/posts";
+  const r = await fetch(url);
+  if (r.ok) {
+    const d = await r.json();
+    setPosts(d.posts || []);
+  }
+  setPostsLoading(false);
+}, [me]);
+
 
   useEffect(() => { if (!loading) load(); }, [loading, me, load]);
-
+  
   if (loading) return null;
 
   function removePost(id) { setPosts((p) => p.filter((x) => x.id !== id)); }
