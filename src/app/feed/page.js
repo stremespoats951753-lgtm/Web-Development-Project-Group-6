@@ -1,39 +1,70 @@
 "use client";
-// FEED page = the main news feed (posts from people I follow + me)
-// Important: this is NOT "all posts", it only shows the FOLLOWING feed
-// (fixes the "when I hit following it shows all tweets" bug from feedback)
+// FEED page = global feed, shows every post in newest-first order
 import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/Header";
 import Composer from "@/components/Composer";
 import PostCard from "@/components/PostCard";
 import SuggestedUsers from "@/components/SuggestedUsers";
+import PostTypeFilters from "@/components/PostTypeFilters";
 import useRequireAuth from "@/components/useRequireAuth";
 
 export default function FeedPage() {
   const { me, loading } = useRequireAuth();
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(true);
+  const [activeType, setActiveType] = useState("");
 
-const load = useCallback(async () => {
-  setPostsLoading(true);
-  // grab tag from query string so filtering works on this page too
-  const sp = new URLSearchParams(window.location.search);
-  const tag = sp.get("tag");
-  const url = tag ? `/api/posts?tag=${encodeURIComponent(tag)}` : "/api/posts";
-  const r = await fetch(url);
-  if (r.ok) {
-    const d = await r.json();
-    setPosts(d.posts || []);
-  }
-  setPostsLoading(false);
-}, [me]);
+  const load = useCallback(async (forcedType) => {
+    setPostsLoading(true);
 
+    const pickedType =
+      typeof forcedType === "string"
+        ? forcedType
+        : new URLSearchParams(window.location.search).get("type") || "";
 
-  useEffect(() => { if (!loading) load(); }, [loading, me, load]);
-  
+    const url = pickedType
+      ? `/api/posts?type=${encodeURIComponent(pickedType)}`
+      : "/api/posts";
+
+    const r = await fetch(url);
+    if (r.ok) {
+      const d = await r.json();
+      setPosts(d.posts || []);
+    }
+
+    setPostsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const pickedType =
+      new URLSearchParams(window.location.search).get("type") || "";
+
+    setActiveType(pickedType);
+    load(pickedType);
+  }, [loading, load]);
+
   if (loading) return null;
 
-  function removePost(id) { setPosts((p) => p.filter((x) => x.id !== id)); }
+  function removePost(id) {
+    setPosts((p) => p.filter((x) => x.id !== id));
+  }
+
+  function changeFilter(nextType) {
+    const sp = new URLSearchParams(window.location.search);
+
+    if (nextType) sp.set("type", nextType);
+    else sp.delete("type");
+
+    const nextUrl = sp.toString()
+      ? `${window.location.pathname}?${sp.toString()}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, "", nextUrl);
+    setActiveType(nextType);
+    load(nextType);
+  }
 
   return (
     <>
@@ -49,18 +80,34 @@ const load = useCallback(async () => {
         </aside>
 
         <section>
-          <Composer onPosted={load} me={me} />
-          <h2 style={{ margin: "16px 0 10px", fontSize: 14, letterSpacing: 2, color: "var(--green)" }}>
-            {"RECENT POSTS"}
+          <Composer onPosted={() => load(activeType)} me={me} />
+          <PostTypeFilters activeType={activeType} onChange={changeFilter} />
+
+          <h2
+            style={{
+              margin: "16px 0 10px",
+              fontSize: 14,
+              letterSpacing: 2,
+              color: "var(--green)",
+            }}
+          >
+            ALL POSTS
           </h2>
+
           {postsLoading && <div className="card muted">Loading...</div>}
+
           {!postsLoading && posts.length === 0 && (
-            <div className="card muted">
-              No posts yet. Try following a few people from the Explore page.
-            </div>
+            <div className="card muted">No posts match this filter yet.</div>
           )}
+
           {posts.map((p) => (
-            <PostCard key={p.id} post={p} currentUserId={me?.id} me={me} onDeleted={removePost} />
+            <PostCard
+              key={p.id}
+              post={p}
+              currentUserId={me?.id}
+              me={me}
+              onDeleted={removePost}
+            />
           ))}
         </section>
 

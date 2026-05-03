@@ -33,7 +33,7 @@ function shapePost(p) {
 
 // the main news feed: posts from people I follow, sorted newest first
 // note: the followingIds list is built by the database, we never load all posts
-export async function getFollowingFeed(currentUserId, take = 50) {
+export async function getFollowingFeed(currentUserId, take = 50, type) {
   const follows = await prisma.follow.findMany({
     where: { followerId: currentUserId },
     select: { followingId: true },
@@ -43,7 +43,10 @@ export async function getFollowingFeed(currentUserId, take = 50) {
   ids.push(currentUserId);
 
   const rows = await prisma.post.findMany({
-    where: { authorId: { in: ids } },
+    where: {
+      authorId: { in: ids },
+      ...(type ? { type } : {}),
+    },
     include: postInclude(currentUserId),
     orderBy: { createdAt: "desc" },
     take,

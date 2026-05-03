@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Home, User, Compass, BarChart3, LogOut, Users } from "lucide-react";
+import { requireLogin } from "./useRequireAuth";
 
 export default function Header({ me }) {
   const router = useRouter();
@@ -30,7 +31,15 @@ export default function Header({ me }) {
         <Link href="/feed" className={navClass("/feed")}>
           <Home size={16} /> Feed
         </Link>
-        <Link href="/following" className={navClass("/following")}>
+        <Link
+          href="/following"
+          className={navClass("/following")}
+          onClick={(e) => {
+            if (me) return;
+            e.preventDefault();
+            requireLogin(null, router, "You need to log in to open the following feed.");
+          }}
+        >
           <Users size={16} /> Following
         </Link>
         <Link href="/explore" className={navClass("/explore")}>

@@ -367,3 +367,34 @@ button { font-family: inherit; cursor: pointer; }
 /* tables/code overflow protection */
 img, svg { max-width: 100%; }
 .card pre, .card code { word-break: break-word; }
+
+/* filter buttons on feed/following, keeps the 4 choices in one row */
+.feed-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 6px;
+}
+
+.feed-filter-btn {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.feed-filter-btn:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.feed-filter-btn.on {
+  color: #07120c;
+  background: var(--green);
+  border-color: var(--green);
+}
