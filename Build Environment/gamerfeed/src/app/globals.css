@@ -215,7 +215,8 @@ button { font-family: inherit; cursor: pointer; }
     radial-gradient(circle at 50% 50%, rgba(0,212,255,0.06), transparent 40%),
     var(--bg-main);
 }
-/* the moving grid horizon, classic synthwave look */
+/* the moving grid horizon, classic synthwave look
+Source: https://github.com/reactdeveloper22/CSS-Animated-Background */
 .auth-page::before {
   content: "";
   position: absolute; inset: -50% -50% 50% -50%;
