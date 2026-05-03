@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "GamerFeed API",
+    "description": "Postman collection for GamerFeed (Phase 1 + Phase 2). Run 'Auth - Login (demo)' first; Postman stores the gf_uid cookie automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "userId", "value": "1" },
+    { "key": "postId", "value": "1" },
+    { "key": "commentId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newplayer\",\n  \"email\": \"new@gamerfeed.test\",\n  \"password\": \"password123\",\n  \"bio\": \"hi I am new here\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login (demo)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"demo\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Me",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/logout" }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        { "name": "Get user by id",       "request": { "method": "GET",    "url": "{{baseUrl}}/api/users/{{userId}}" } },
+        { "name": "Get user posts",       "request": { "method": "GET",    "url": "{{baseUrl}}/api/users/{{userId}}/posts" } },
+        { "name": "Search users",         "request": { "method": "GET",    "url": "{{baseUrl}}/api/users/search?q=ninja" } },
+        { "name": "Suggested users",      "request": { "method": "GET",    "url": "{{baseUrl}}/api/users/suggest" } },
+        { "name": "Follow user",          "request": { "method": "POST",   "url": "{{baseUrl}}/api/users/{{userId}}/follow" } },
+        { "name": "Unfollow user",        "request": { "method": "DELETE", "url": "{{baseUrl}}/api/users/{{userId}}/follow" } },
+        {
+          "name": "Edit my profile (bio)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/users/me",
+            "body": { "mode": "raw", "raw": "{ \"bio\": \"updated from postman\" }" }
+          }
+        },
+        {
+          "name": "Randomize my avatar",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/users/me/avatar",
+            "body": { "mode": "raw", "raw": "{}" }
+          }
+        },
+        {
+          "name": "Set specific avatar icon",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/users/me/avatar",
+            "body": { "mode": "raw", "raw": "{ \"icon\": \"gamepad-2\" }" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        { "name": "All posts",            "request": { "method": "GET",  "url": "{{baseUrl}}/api/posts" } },
+        { "name": "All posts (achievements only)", "request": { "method": "GET", "url": "{{baseUrl}}/api/posts?type=achievement" } },
+        { "name": "Following feed",       "request": { "method": "GET",  "url": "{{baseUrl}}/api/posts/feed" } },
+        { "name": "Get post by id",       "request": { "method": "GET",  "url": "{{baseUrl}}/api/posts/{{postId}}" } },
+        {
+          "name": "Create post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/posts",
+            "body": { "mode": "raw", "raw": "{\n  \"content\": \"Just got platinum in Apex!\",\n  \"type\": \"achievement\"\n}" }
+          }
+        },
+        { "name": "Delete post",          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/posts/{{postId}}" } },
+        { "name": "Toggle like",          "request": { "method": "POST",   "url": "{{baseUrl}}/api/posts/{{postId}}/like" } },
+        { "name": "List comments",        "request": { "method": "GET",    "url": "{{baseUrl}}/api/posts/{{postId}}/comments" } },
+        {
+          "name": "Add comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/posts/{{postId}}/comments",
+            "body": { "mode": "raw", "raw": "{ \"content\": \"nice post!\" }" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        { "name": "Delete comment", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/comments/{{commentId}}" } }
+      ]
+    },
+    {
+      "name": "Stats",
+      "item": [
+        { "name": "Get stats", "request": { "method": "GET", "url": "{{baseUrl}}/api/stats" } }
+      ]
+    }
+  ]
+}
