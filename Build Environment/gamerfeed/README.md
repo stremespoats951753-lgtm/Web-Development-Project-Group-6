@@ -17,9 +17,7 @@ This guide will help you set up the project using [Bun](https://bun.sh), a fast 
 
 Follow the [official Bun installation guide](https://bun.com/docs/installation) or run the following command:
 
-
 `curl -fsSL https://bun.com/install | bash`
-
 
 > Note: If Bun is installed but your terminal returns `command not found`, you may need to add Bun to your `PATH` manually.
 
@@ -60,9 +58,21 @@ For zsh
 For fish
 `source ~/.config/fish/config.fish`
 
+Lastly, Restart Vscode if opened during installation.
+
 ---
 
-## 3. Install Project Dependencies
+## 3. Clone the Github Repository
+
+`git clone https://github.com/stremespoats951753-lgtm/Web-Development-Project-Group-6`
+
+`cd ~/path/to/repo`
+
+`cd ./Build\ Environment/gamerfeed/`
+
+---
+
+## 4. Install Project Dependencies
 
 Once Bun is installed and properly configured, navigate to your project directory and run:
 
@@ -72,7 +82,16 @@ Once Bun is installed and properly configured, navigate to your project director
 
 ---
 
-## 4. Run the Development Server
+## 4. Initialise Prisma
+
+`bunx prisma generate`
+`bunx prisma migrate dev --name init`
+`bun ./prisma/seed.js`
+
+
+---
+
+## 6. Run the Development Server
 
 Start the development server with:
 
