@@ -16,7 +16,7 @@ export default function FeedPage() {
 
   const load = useCallback(async () => {
     setPostsLoading(true);
-    const r = await fetch(me ? "/api/posts/feed" : "/api/posts");
+    const r = await fetch("/api/posts");
     if (r.ok) {
       const d = await r.json();
       setPosts(d.posts || []);
@@ -46,7 +46,7 @@ export default function FeedPage() {
         <section>
           <Composer onPosted={load} me={me} />
           <h2 style={{ margin: "16px 0 10px", fontSize: 14, letterSpacing: 2, color: "var(--green)" }}>
-            {me ? "FOLLOWING FEED" : "RECENT POSTS"}
+            {"RECENT POSTS"}
           </h2>
           {postsLoading && <div className="card muted">Loading...</div>}
           {!postsLoading && posts.length === 0 && (
