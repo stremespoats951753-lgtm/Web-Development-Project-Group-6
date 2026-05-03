@@ -44,6 +44,7 @@ Output examples: `/bin/zsh`, `/bin/bash`, `/bin/fish`
 
 
 `export BUN_INSTALL="$HOME/.bun"`
+
 `export PATH="$BUN_INSTALL/bin:$PATH"`
 
 
@@ -85,7 +86,9 @@ Once Bun is installed and properly configured, navigate to your project director
 ## 5. Initialize Prisma
 
 `bunx prisma generate`
+
 `bunx prisma migrate dev --name init`
+
 `bun ./prisma/seed.js`
 
 
