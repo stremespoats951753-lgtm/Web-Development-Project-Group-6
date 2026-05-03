@@ -167,6 +167,8 @@ async function main() {
 
   console.log("Done seeding!");
   console.log("Login with username: demo  password: password123");
+  console.log("Login with username: ninja  password: password123");
+  console.log("Login with username: pixel  password: password123");
 }
 
 main()

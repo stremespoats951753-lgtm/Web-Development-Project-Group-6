@@ -82,7 +82,7 @@ Once Bun is installed and properly configured, navigate to your project director
 
 ---
 
-## 4. Initialise Prisma
+## 5. Initialize Prisma
 
 `bunx prisma generate`
 `bunx prisma migrate dev --name init`
@@ -106,6 +106,18 @@ http://localhost:3000
 You should now see your Next.js application running locally.
 
 ---
+
+## Extra. API Testing Using Postman
+
+Create an account on https://www.postman.com/
+
+Next to Collections, click on the 3 dots, then click import, choose the `postman.json` file in this repo.
+
+click on `Run all`.
+
+---
+
+
 
 ## Summary
 
