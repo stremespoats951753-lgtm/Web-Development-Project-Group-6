@@ -4,10 +4,23 @@
 //
 // the order of clearing matters because of foreign keys, child tables first
 // ref: https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
-const { prisma } = require("@/lib/prisma");
-const { faker } = require("@faker-js/faker");
-const bcrypt = require("bcryptjs");
+// const { prisma } = require("@/lib/prisma");
+// const { faker } = require("@faker-js/faker");
+// const bcrypt = require("bcryptjs");
 
+
+import { PrismaClient } from "@prisma/client";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { faker } from "@faker-js/faker";
+import bcrypt from "bcryptjs";
+
+// Create a dedicated client for seeding (don't reuse lib/prisma.js in seed files)
+const prisma = new PrismaClient({
+  adapter: new PrismaLibSql({
+    url: process.env.DATABASE_URL ?? "",
+  }),
+  log: ["query"],
+});
 
 
 // list of lucide icons used as avatars (mirrors src/lib/avatars.js)
