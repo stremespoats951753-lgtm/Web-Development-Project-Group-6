@@ -1,0 +1,693 @@
+/* ============================================================
+   Feed, Create Post, Post Cards, Modal, Comments
+   exact same style as phase 1, this was to simplify the process
+   ============================================================ */
+
+/* ================= CREATE POST ================= */
+
+.create-post {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.create-post-row {
+    display: flex;
+    gap: 12px;
+}
+
+.post-avatar {
+    background: #1a5a3a;
+    color: var(--green);
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.create-post-inputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.create-post-inputs input,
+.create-post-inputs textarea {
+    background: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #eee;
+    padding: 8px 12px;
+    font-size: 14px;
+    resize: none;
+}
+
+.type-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.type-chip {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: transparent;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.type-chip.selected.update {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(0, 245, 160, 0.1);
+}
+
+.type-chip.selected.achievement {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(245, 160, 0, 0.1);
+}
+
+.type-chip.selected.discussion {
+    border-color: var(--purple);
+    color: var(--purple);
+    background: rgba(122, 111, 255, 0.1);
+}
+
+.post-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn-cancel {
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-submit {
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: none;
+    background: var(--green);
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* ================= FEED FILTERS ================= */
+
+.feed-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.feed-filter {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.feed-filter.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(0, 245, 160, 0.08);
+}
+
+/* ================= POST CARDS ================= */
+
+.post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    overflow: hidden;
+}
+
+.post-card.achievement {
+    border-left-color: var(--orange);
+}
+
+.post-card.discussion {
+    border-left-color: var(--purple);
+}
+
+.post-card:hover {
+    border-color: #444;
+}
+
+.card-body {
+    padding: 14px;
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card-username {
+    font-size: 14px;
+    font-weight: bold;
+    color: #eee;
+}
+
+.card-username span {
+    cursor: pointer;
+}
+
+.card-username span:hover {
+    color: var(--green);
+}
+
+.card-timestamp {
+    font-size: 11px;
+    color: #555;
+    margin-top: 2px;
+}
+
+.game-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    color: #888;
+    margin-left: 6px;
+}
+
+.type-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.update .type-badge {
+    background: rgba(0, 245, 160, 0.1);
+    color: var(--green);
+}
+
+.achievement .type-badge {
+    background: rgba(245, 160, 0, 0.1);
+    color: var(--orange);
+}
+
+.discussion .type-badge {
+    background: rgba(122, 111, 255, 0.1);
+    color: var(--purple);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(1.6em * 3);
+    overflow: hidden;
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.profile-full-content {
+    max-height: none;
+    overflow: visible;
+    white-space: pre-line;
+}
+
+.achievement-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(245, 160, 0, 0.08);
+    border: 1px solid rgba(245, 160, 0, 0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+}
+
+.achievement-label {
+    font-size: 10px;
+    color: var(--orange);
+    letter-spacing: 1px;
+}
+
+.achievement-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--orange-light);
+}
+
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--border-soft);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    color: var(--green);
+    background: rgba(0, 245, 160, 0.08);
+}
+
+.action-btn.liked {
+    color: var(--red);
+}
+
+.delete-btn {
+    color: #888;
+}
+
+.delete-btn:hover {
+    color: #ff4d4f;
+    background: rgba(255, 77, 79, 0.12);
+}
+
+.read-more {
+    margin-left: auto;
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+/* ================= SIDEBAR WIDGETS ================= */
+
+.trending-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.trending-rank {
+    color: #555;
+    font-size: 13px;
+    width: 14px;
+}
+
+.trending-tag {
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 1px;
+}
+
+.trending-name {
+    font-size: 13px;
+    color: #eee;
+}
+
+.trending-count {
+    font-size: 11px;
+    color: #555;
+}
+
+.leader-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.leader-pos {
+    font-size: 12px;
+    width: 14px;
+}
+
+.gold-pos {
+    color: gold;
+}
+
+.silver-pos {
+    color: silver;
+}
+
+.bronze-pos {
+    color: #cd7f32;
+}
+
+.other-pos {
+    color: #555;
+}
+
+.leader-name {
+    font-size: 13px;
+}
+
+.leader-xp {
+    margin-left: auto;
+    font-size: 11px;
+    color: #555;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-top-bar {
+    height: 4px;
+    background: var(--green);
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.modal-close {
+    margin-left: auto;
+    cursor: pointer;
+    color: #555;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #eee;
+}
+
+.modal-body {
+    padding: 16px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.modal-text {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+.modal-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background: transparent;
+    color: #aaa;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.modal-action-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.modal-heading {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.modal-subheading {
+    font-size: 11px;
+    color: #555;
+}
+
+.modal-action-btn.liked {
+    color: #f50057;
+    border-color: #f50057;
+}
+
+/* ================= COMMENTS ================= */
+
+.comments-section {
+    padding: 0 16px 16px;
+}
+
+.comments-header {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #555;
+    margin-bottom: 12px;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 14px;
+}
+
+.comment-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.comment-delete-btn {
+    margin-top: 6px;
+    background: transparent;
+    border: none;
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.comment-delete-btn:hover {
+    color: #ff4d4f;
+}
+
+.mini-follow-btn {
+    margin-left: auto;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: none;
+    background: var(--green);
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.comment-input-row textarea {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #eee;
+    padding: 8px 10px;
+    font-size: 13px;
+    resize: none;
+}
+
+.btn-comment {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: var(--green);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+    align-self: flex-end;
+}
+
+.comment-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.comment-bubble {
+    background: #2a2a2a;
+    border-radius: 8px;
+    padding: 10px 12px;
+    flex: 1;
+}
+
+.comment-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.comment-user {
+    font-size: 13px;
+    font-weight: bold;
+    color: #eee;
+}
+
+.comment-time {
+    font-size: 11px;
+    color: #555;
+}
+
+.comment-text {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+/* ================= LIGHT THEME ================= */
+
+body.light-theme .create-post,
+body.light-theme .post-card,
+body.light-theme .modal {
+    background: #ffffff;
+    border-color: #e0e0e0;
+}
+
+body.light-theme .create-post-inputs input,
+body.light-theme .create-post-inputs textarea,
+body.light-theme .comment-input-row textarea {
+    background: #f0f2f5;
+    border-color: #d0d5dd;
+    color: #1a1a2e;
+}
+
+body.light-theme .type-chip,
+body.light-theme .feed-filter {
+    border-color: #d0d5dd;
+    color: #888;
+}
+
+body.light-theme .feed-filter.active {
+    border-color: #00c87a;
+    color: #00875a;
+    background: rgba(0, 200, 122, 0.08);
+}
+
+body.light-theme .post-card {
+    border-left-color: #00c87a;
+}
+
+body.light-theme .post-card.achievement {
+    border-left-color: #e09520;
+}
+
+body.light-theme .post-card.discussion {
+    border-left-color: #6c5ce7;
+}
+
+body.light-theme .card-username,
+body.light-theme .card-title,
+body.light-theme .comment-user {
+    color: #1a1a2e;
+}
+
+body.light-theme .card-content,
+body.light-theme .modal-text,
+body.light-theme .comment-text {
+    color: #555;
+}
+
+body.light-theme .card-actions,
+body.light-theme .modal-header,
+body.light-theme .modal-actions,
+body.light-theme .comments-header {
+    border-color: #e0e0e0;
+}
+
+body.light-theme .trending-name {
+    color: #1a1a2e;
+}
+
+body.light-theme .comment-bubble {
+    background: #f0f2f5;
+}
+
+body.light-theme .modal-overlay {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+body.light-theme .modal-action-btn {
+    border-color: #d0d5dd;
+    color: #555;
+}
+
+body.light-theme .modal-action-btn:hover {
+    border-color: #00c87a;
+    color: #00875a;
+}

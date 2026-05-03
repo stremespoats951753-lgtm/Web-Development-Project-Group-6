@@ -1,0 +1,71 @@
+/* ============================================================
+   Statistics Page
+   this is a new page made to style the statistics part of the project
+   ============================================================ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.stat-card span {
+    display: block;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--green);
+    margin-bottom: 6px;
+}
+
+.stat-card p {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+    color: #aaa;
+    font-size: 14px;
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-row strong {
+    color: var(--green);
+    white-space: nowrap;
+}
+
+/* ================= LIGHT THEME ================= */
+
+body.light-theme .stat-card {
+    background: #ffffff;
+    border-color: #e0e0e0;
+}
+
+body.light-theme .stat-row {
+    border-bottom-color: #e0e0e0;
+    color: #555;
+}
+
+body.light-theme .stat-card p {
+    color: #555;
+}
+
+body.light-theme .stat-card span,
+body.light-theme .stat-row strong {
+    color: #00875a;
+}

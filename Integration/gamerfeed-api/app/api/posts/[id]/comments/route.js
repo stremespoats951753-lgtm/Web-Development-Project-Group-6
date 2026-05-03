@@ -3,9 +3,12 @@ import {
     createComment,
 } from "../../../../data/repos/commentsRepo.js";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
     try {
-        const comments = await getCommentsByPostId(params.id);
+        const { id } = await context.params;
+
+        const comments = await getCommentsByPostId(id);
+
         return Response.json(comments);
     } catch (error) {
         return Response.json(
@@ -15,8 +18,9 @@ export async function GET(req, { params }) {
     }
 }
 
-export async function POST(req, { params }) {
+export async function POST(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
         if (!body.userId || !body.text) {
@@ -26,7 +30,7 @@ export async function POST(req, { params }) {
             );
         }
 
-        const comment = await createComment(params.id, body);
+        const comment = await createComment(id, body);
 
         return Response.json(comment, { status: 201 });
     } catch (error) {

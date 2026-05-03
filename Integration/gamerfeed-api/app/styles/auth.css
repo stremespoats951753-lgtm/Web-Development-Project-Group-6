@@ -1,0 +1,347 @@
+/* ============================================================
+   Auth Pages: Loginand Register
+   we followed the same style we used in Phase 1
+   ============================================================ */
+
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.auth-shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(1100px, 100%);
+    min-height: 680px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.015),
+            rgba(255, 255, 255, 0.005));
+}
+
+/* ================= LOGIN BRAND PANEL ================= */
+
+.brand-panel {
+    padding: 40px;
+    background:
+        linear-gradient(180deg, rgba(0, 245, 160, 0.04), transparent 40%),
+        #0a0f1d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-panel .logo {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+}
+
+.green {
+    color: var(--green);
+}
+
+.orange {
+    color: #f5a623;
+}
+
+.tagline {
+    margin: 20px 0;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.feature-box {
+    display: grid;
+    gap: 10px;
+}
+
+.feature-box p {
+    margin: 10px 0;
+    color: var(--text-main);
+}
+
+/* ================= LOGIN FORM PANEL ================= */
+
+.form-panel {
+    padding: 40px;
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-panel h2 {
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: white;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.12);
+}
+
+.input-group input.error {
+    border-color: var(--danger);
+}
+
+small,
+.error-text {
+    color: var(--danger);
+    font-size: 0.83rem;
+    min-height: 18px;
+    display: block;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--green);
+    border: none;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+}
+
+.btn-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+/* ================= REGISTER BRAND PANEL ================= */
+
+.auth-brand-panel {
+    padding: 48px;
+    background:
+        linear-gradient(180deg, rgba(0, 245, 160, 0.04), transparent 40%),
+        linear-gradient(135deg, #0a0f1d, #10182d);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-logo {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.brand-green {
+    color: var(--green);
+}
+
+.brand-orange {
+    color: #f5a623;
+}
+
+.brand-tagline {
+    max-width: 500px;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 34px;
+}
+
+.brand-cards {
+    display: grid;
+    gap: 18px;
+}
+
+.mini-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border);
+    border-left: 3px solid #f5a623;
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.mini-card h3 {
+    margin: 10px 0 8px;
+    font-size: 1.15rem;
+}
+
+.mini-card p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.mini-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #f5a623;
+    background: rgba(245, 166, 35, 0.12);
+    border: 1px solid rgba(245, 166, 35, 0.25);
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+/* ================= REGISTER FORM PANEL ================= */
+
+.auth-form-panel {
+    padding: 42px 36px;
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-form h2 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+}
+
+.form-subtitle {
+    margin: 0 0 26px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.global-message {
+    display: block;
+    min-height: 20px;
+    margin: 4px 0 18px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.global-message.success {
+    color: var(--green);
+}
+
+.global-message.error {
+    color: var(--danger);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--green), #5affd7);
+    color: #07111a;
+    font-size: 0.98rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(0, 245, 160, 0.18);
+}
+
+.bottom-link {
+    margin-top: 18px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.bottom-link a {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.bottom-link a:hover {
+    text-decoration: underline;
+}
+
+/* ================= LIGHT THEME ================= */
+
+body.light-theme .brand-panel,
+body.light-theme .auth-brand-panel {
+    background: #eef2f7;
+}
+
+body.light-theme .form-panel,
+body.light-theme .auth-form-panel {
+    background: #ffffff;
+}
+
+body.light-theme .btn-secondary {
+    color: #1a1a2e;
+    border-color: #d0d5dd;
+}
+
+body.light-theme .mini-card {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 920px) {
+    .auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-brand-panel,
+    .brand-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 560px) {
+    .auth-page {
+        padding: 14px;
+    }
+
+    .brand-panel,
+    .form-panel,
+    .auth-brand-panel,
+    .auth-form-panel {
+        padding: 26px 20px;
+    }
+
+    .auth-form h2,
+    .form-panel h2 {
+        font-size: 1.65rem;
+    }
+
+    .brand-panel .logo {
+        font-size: 2rem;
+    }
+}

@@ -5,20 +5,21 @@ import {
     hasUserLikedPost,
 } from "../../../../data/repos/likesRepo.js";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
     try {
+        const { id } = await context.params;
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get("userId");
 
-        const likeCount = await getPostLikeCount(params.id);
+        const likeCount = await getPostLikeCount(id);
 
         let liked = false;
         if (userId) {
-            liked = await hasUserLikedPost(params.id, userId);
+            liked = await hasUserLikedPost(id, userId);
         }
 
         return Response.json({
-            postId: Number(params.id),
+            postId: Number(id),
             likeCount,
             liked,
         });
@@ -27,37 +28,46 @@ export async function GET(req, { params }) {
     }
 }
 
-export async function POST(req, { params }) {
+export async function POST(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
         if (!body.userId) {
             return Response.json({ error: "userId is required" }, { status: 400 });
         }
 
-        await likePost(params.id, body.userId);
-        const likeCount = await getPostLikeCount(params.id);
+        const alreadyLiked = await hasUserLikedPost(id, body.userId);
+
+        if (alreadyLiked) {
+            await unlikePost(id, body.userId);
+        } else {
+            await likePost(id, body.userId);
+        }
+
+        const likeCount = await getPostLikeCount(id);
 
         return Response.json({
             success: true,
-            liked: true,
+            liked: !alreadyLiked,
             likeCount,
         });
     } catch (error) {
-        return Response.json({ error: "Failed to like post" }, { status: 500 });
+        return Response.json({ error: "Failed to toggle like" }, { status: 500 });
     }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
     try {
+        const { id } = await context.params;
         const body = await req.json();
 
         if (!body.userId) {
             return Response.json({ error: "userId is required" }, { status: 400 });
         }
 
-        await unlikePost(params.id, body.userId);
-        const likeCount = await getPostLikeCount(params.id);
+        await unlikePost(id, body.userId);
+        const likeCount = await getPostLikeCount(id);
 
         return Response.json({
             success: true,
