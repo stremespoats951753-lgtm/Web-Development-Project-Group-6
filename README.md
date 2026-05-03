@@ -89,8 +89,7 @@ Once Bun is installed and properly configured, navigate to your project director
 
 `bunx prisma migrate dev --name init`
 
-`bun ./prisma/seed.js`
-
+the database is already seesed
 
 ---
 

@@ -1,0 +1,87 @@
+// Prisma schema for GamerFeed
+// Refs:
+//   https://www.prisma.io/docs/concepts/components/prisma-schema
+//   https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "client"
+}
+
+datasource db {
+  // we use sqlite because the spec says any relational db is fine
+  provider = "sqlite"
+}
+
+// the main user, every other table points back to this
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String // hashed with bcrypt, never store plain text
+  bio       String? // optionl short bio shown on profile
+  avatarUrl String? // path to uploaded image, null = use initial letter
+  createdAt DateTime @default(now())
+
+  posts    Post[]
+  comments Comment[]
+  likes    Like[]
+
+  // self-relation for the follow system, see prisma docs link above
+  following Follow[] @relation("follower")
+  followers Follow[] @relation("following")
+}
+
+// a post on the feed, can be one of 3 types (update / achievement / discussion)
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String
+  // the kind of post, stored as a plain string since sqlite has no enum
+  type      String   @default("update")
+  createdAt DateTime @default(now())
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  comments Comment[]
+  likes    Like[]
+}
+
+// a comment under a post, can also be deleted (treated like a mini post)
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+// a like is just a pair (user, post), uniqe together so a user cant like twice
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+// follow is also a pair (follower, following), self relation on User
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
