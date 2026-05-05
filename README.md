@@ -89,7 +89,7 @@ Once Bun is installed and properly configured, navigate to your project director
 
 `bunx prisma migrate dev --name init`
 
-the database is already seesed
+`bun ./prisma/seed.mjs`
 
 ---
 
